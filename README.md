@@ -15,6 +15,11 @@ El proyecto se estructura en 3 capas:
 2. **Capa de Negocio**: Contiene la lógica de negocio.
 3. **Capa de Presentación**: Implementada con `Swing`, permite a los usuarios interactuar con el sistema mediante una interfaz gráfica.
 
+## Directorio de Pruebas
+
+El proyecto contiene un directorio llamado `test` con pruebas de las diferentes capas del sistema.
+
+
 ## Instalación y Ejecución
 
 ### Prerrequisitos

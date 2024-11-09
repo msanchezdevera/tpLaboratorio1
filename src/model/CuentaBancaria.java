@@ -12,7 +12,7 @@ public class CuentaBancaria {
 	public static final String CAJA_DE_AHORRO_EN_DOLARES = "Caja de Ahorro en dolares";
 	public static final String FONDO_FIMA = "Fondo Fima";
 
-	private static final Set<String> TIPOS_CUENTA_VALIDOS = new HashSet<String>();
+	public static final Set<String> TIPOS_CUENTA_VALIDOS = new HashSet<String>();
 
 	static {
 		TIPOS_CUENTA_VALIDOS.add(CAJA_DE_AHORRO);
