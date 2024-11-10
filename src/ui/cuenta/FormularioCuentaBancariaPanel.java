@@ -1,8 +1,11 @@
 package ui.cuenta;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -12,66 +15,87 @@ import javax.swing.JTextField;
 import model.CuentaBancaria;
 
 public abstract class FormularioCuentaBancariaPanel extends JPanel {
+
+	protected JTextField txtNumeroCuenta;
+	protected JTextField txtSaldo;
+	protected JComboBox<String> comboTipoCuenta;
+	protected JTextField txtClienteId;
+	protected JTextField txtCbu;
+	protected JTextField txtAlias;
+	protected JButton btnGuardar;
+	protected JButton btnCancelar;
+
+	public FormularioCuentaBancariaPanel(String titulo) {
+		setLayout(new BorderLayout());
+        armarFormulario(titulo);
+	}
 	
-    protected JTextField txtNumeroCuenta;
-    protected JTextField txtSaldo;
-    protected JComboBox<String> comboTipoCuenta;
-    protected JTextField txtClienteId;
-    protected JTextField txtCbu;
-    protected JTextField txtAlias;
-    protected JButton btnGuardar;
-    protected JButton btnCancelar;
+	private void armarFormulario(String titulo) {
+        JLabel lblTitulo = new JLabel(titulo);
+        lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+        lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        add(lblTitulo, BorderLayout.NORTH);
 
-    public FormularioCuentaBancariaPanel() {
-        armarFormulario();
-    }
-
-    private void armarFormulario() {
-        setLayout(new GridLayout(7, 2));
+        JPanel formularioPanel = new JPanel(new GridLayout(7, 2, 5, 5));
 
         JLabel lblNumeroCuenta = new JLabel("Número de Cuenta:");
         txtNumeroCuenta = new JTextField();
-        add(lblNumeroCuenta);
-        add(txtNumeroCuenta);
+        formularioPanel.add(lblNumeroCuenta);
+        formularioPanel.add(txtNumeroCuenta);
 
         JLabel lblSaldo = new JLabel("Saldo:");
         txtSaldo = new JTextField();
-        add(lblSaldo);
-        add(txtSaldo);
+        formularioPanel.add(lblSaldo);
+        formularioPanel.add(txtSaldo);
 
         JLabel lblTipoCuenta = new JLabel("Tipo de Cuenta:");
         String[] tiposCuenta = CuentaBancaria.TIPOS_CUENTA_VALIDOS.toArray(new String[0]);
         comboTipoCuenta = new JComboBox<>(tiposCuenta);
-        add(lblTipoCuenta);
-        add(comboTipoCuenta);
+        formularioPanel.add(lblTipoCuenta);
+        formularioPanel.add(comboTipoCuenta);
 
         JLabel lblClienteId = new JLabel("Cliente ID:");
         txtClienteId = new JTextField();
-        add(lblClienteId);
-        add(txtClienteId);
+        formularioPanel.add(lblClienteId);
+        formularioPanel.add(txtClienteId);
 
         JLabel lblCbu = new JLabel("CBU:");
         txtCbu = new JTextField();
-        add(lblCbu);
-        add(txtCbu);
+        formularioPanel.add(lblCbu);
+        formularioPanel.add(txtCbu);
 
         JLabel lblAlias = new JLabel("Alias:");
         txtAlias = new JTextField();
-        add(lblAlias);
-        add(txtAlias);
+        formularioPanel.add(lblAlias);
+        formularioPanel.add(txtAlias);
 
+        add(formularioPanel, BorderLayout.CENTER);
+
+        JPanel botonesPanel = new JPanel(new GridLayout(1, 2, 10, 0));
         btnGuardar = new JButton("Guardar");
-        add(btnGuardar);
-
         btnCancelar = new JButton("Cancelar");
-        add(btnCancelar);
+        botonesPanel.add(btnGuardar);
+        botonesPanel.add(btnCancelar);
+        
+        btnGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarAccion();
+            }
+        });
+
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelarAccion();
+            }
+        });
+
+        add(botonesPanel, BorderLayout.SOUTH);
     }
 
-    public void setGuardarButtonListener(ActionListener listener) {
-        btnGuardar.addActionListener(listener);
-    }
-
-    public void setCancelarButtonListener(ActionListener listener) {
-        btnCancelar.addActionListener(listener);
-    }
+	protected abstract void guardarAccion();
+	
+    protected abstract void cancelarAccion();
+    
 }

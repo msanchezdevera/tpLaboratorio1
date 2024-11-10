@@ -18,8 +18,10 @@ public class CuentaBancariaDaoTest {
 
 			CuentaBancariaH2DAO cuentaDao = new CuentaBancariaH2DAO();
 
-			CuentaBancaria cuenta1 = new CuentaBancaria("123456789", 1000.0, CuentaBancaria.CAJA_DE_AHORRO, 1);
-			CuentaBancaria cuenta2 = new CuentaBancaria("987654321", 1500.0, CuentaBancaria.CUENTA_CORRIENTE, 2);
+			CuentaBancaria cuenta1 = new CuentaBancaria("123456789", 1000.0, CuentaBancaria.CAJA_DE_AHORRO, 1, "99999",
+					"alias1");
+			CuentaBancaria cuenta2 = new CuentaBancaria("987654321", 1500.0, CuentaBancaria.CUENTA_CORRIENTE, 2,
+					"88888", "alias2");
 			cuentaDao.insertar(cuenta1);
 			cuentaDao.insertar(cuenta2);
 

@@ -7,12 +7,16 @@ import service.CuentaBancariaService;
 import ui.cuenta.PantallaAltaCuentaPanel;
 import ui.cuenta.PantallaListadoCuentaBancariaPanel;
 import ui.cuenta.PantallaModificarCuentaPanel;
+import ui.cuenta.PantallaTransferenciaPanel;
 
 public class PanelManager {
 	private JFrame frame;
+	
 	private PantallaListadoCuentaBancariaPanel pantallaListadoCuentasPanel;
 	private PantallaAltaCuentaPanel pantallaAltaCuentaPanel;
 	private PantallaModificarCuentaPanel pantallaModificarCuentaPanel;
+	private PantallaTransferenciaPanel pantallaTransferenciaPanel;
+	
 	private CuentaBancariaService cuentaBancariaService;
 
 	public PanelManager(CuentaBancariaService cuentaBancariaService) {
@@ -54,5 +58,13 @@ public class PanelManager {
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 	}
+	
+	public void mostrarPantallaTransferencia(CuentaBancaria cuentaOrigen) {
+        frame.getContentPane().removeAll();
+        pantallaTransferenciaPanel = new PantallaTransferenciaPanel(this, cuentaBancariaService, cuentaOrigen);
+        frame.getContentPane().add(pantallaTransferenciaPanel);
+        frame.getContentPane().validate();
+        frame.getContentPane().repaint();
+    }
 
 }
