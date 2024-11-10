@@ -20,16 +20,16 @@ import service.CuentaBancariaService;
 import ui.PanelManager;
 
 public class PantallaListadoCuentaBancariaPanel extends JPanel {
-	
+
 	private PanelManager panelManager;
 	private JTable tableCuentas;
 	private CuentaBancariaTableModel tableModel;
-	
+
 	private JButton btnAgregarCuenta;
 	private JButton btnModificarCuenta;
 	private JButton btnEliminarCuenta;
 	private JButton btnTransferir;
-	
+
 	private CuentaBancariaService service;
 
 	public PantallaListadoCuentaBancariaPanel(PanelManager panelManager, CuentaBancariaService service) {
@@ -40,11 +40,11 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 
 	private void armarPantallaListado() {
 		setLayout(new BorderLayout());
-		
+
 		JLabel lblTitulo = new JLabel("Listado de Cuentas Bancarias");
-        lblTitulo.setHorizontalAlignment(JLabel.CENTER);
-        lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        add(lblTitulo, BorderLayout.NORTH);
+		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
+		lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+		add(lblTitulo, BorderLayout.NORTH);
 
 		try {
 			List<CuentaBancaria> cuentas = service.obtenerTodasLasCuentas();
@@ -53,7 +53,8 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 			JScrollPane scrollPane = new JScrollPane(tableCuentas);
 			add(scrollPane, BorderLayout.CENTER);
 		} catch (CuentaBancariaServiceException e) {
-			JOptionPane.showMessageDialog(this, "Error al obtener cuentas bancarias, pruebe mas tarde: " + e.getMessage(), "Error",
+			JOptionPane.showMessageDialog(this,
+					"Error al obtener cuentas bancarias, pruebe mas tarde: " + e.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 
@@ -85,15 +86,15 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 			}
 		});
 		botonesPanel.add(btnEliminarCuenta);
-		
+
 		btnTransferir = new JButton("Transferir");
-        btnTransferir.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nuevaTransferencia();
-            }
-        });
-        botonesPanel.add(btnTransferir);
+		btnTransferir.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nuevaTransferencia();
+			}
+		});
+		botonesPanel.add(btnTransferir);
 
 		add(botonesPanel, BorderLayout.SOUTH);
 	}
@@ -104,7 +105,8 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 			tableModel.setCuentas(cuentas);
 			tableModel.fireTableDataChanged();
 		} catch (CuentaBancariaServiceException e) {
-			JOptionPane.showMessageDialog(this, "Error al obtener cuentas bancarias, pruebe mas tarde: " + e.getMessage(), "Error",
+			JOptionPane.showMessageDialog(this,
+					"Error al obtener cuentas bancarias, pruebe mas tarde: " + e.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -141,17 +143,17 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	private void nuevaTransferencia() {
 		int selectedRow = tableCuentas.getSelectedRow();
-        if (selectedRow != -1) {
-            CuentaBancaria cuenta = tableModel.getCuentaAt(selectedRow);
-            panelManager.mostrarPantallaTransferencia(cuenta);
-        } else {
-            JOptionPane.showMessageDialog(PantallaListadoCuentaBancariaPanel.this,
-                    "Debe seleccionar una cuenta para realizar la transferencia.", "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-        }
+		if (selectedRow != -1) {
+			CuentaBancaria cuenta = tableModel.getCuentaAt(selectedRow);
+			panelManager.mostrarPantallaTransferencia(cuenta);
+		} else {
+			JOptionPane.showMessageDialog(PantallaListadoCuentaBancariaPanel.this,
+					"Debe seleccionar una cuenta para realizar la transferencia.", "Advertencia",
+					JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 }

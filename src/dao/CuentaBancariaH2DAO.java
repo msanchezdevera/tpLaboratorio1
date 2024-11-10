@@ -58,26 +58,28 @@ public class CuentaBancariaH2DAO implements Dao<CuentaBancaria> {
 	 * id, el CBU o el alias de la cuenta.
 	 */
 	public CuentaBancaria buscarCuenta(String input) throws DatabaseException {
-	    List<CuentaBancaria> cuentas;
+		List<CuentaBancaria> cuentas;
 
-	    try {
-	    	// Primero intentar buscar por ID si el input es numerico
-	        int id = Integer.parseInt(input);
-	        String queryPorId = String.format("SELECT * FROM cuenta_bancaria WHERE id = %d", id);
-	        cuentas = QueryExecutor.ejecutarSelect(queryPorId, mapper);
-	        
-	        if (!cuentas.isEmpty()) {
-	            return cuentas.get(0);
-	        }
-	    } catch (NumberFormatException e) {
-	        // Si el campo no es numerico, continuar buscando por CBU o alias
-	    }
+		try {
+			// Primero intentar buscar por ID si el input es numerico
+			int id = Integer.parseInt(input);
+			String queryPorId = String.format("SELECT * FROM cuenta_bancaria WHERE id = %d", id);
+			cuentas = QueryExecutor.ejecutarSelect(queryPorId, mapper);
 
-	    // Si no se encontro la cuenta por ID o el input no era numerico buscar por CBU o alias
-	    String queryPorCbuAlias = String.format("SELECT * FROM cuenta_bancaria WHERE cbu = '%s' OR alias = '%s'", input, input);
-	    cuentas = QueryExecutor.ejecutarSelect(queryPorCbuAlias, mapper);
+			if (!cuentas.isEmpty()) {
+				return cuentas.get(0);
+			}
+		} catch (NumberFormatException e) {
+			// Si el campo no es numerico, continuar buscando por CBU o alias
+		}
 
-	    return cuentas.isEmpty() ? null : cuentas.get(0);
+		// Si no se encontro la cuenta por ID o el input no era numerico buscar por CBU
+		// o alias
+		String queryPorCbuAlias = String.format("SELECT * FROM cuenta_bancaria WHERE cbu = '%s' OR alias = '%s'", input,
+				input);
+		cuentas = QueryExecutor.ejecutarSelect(queryPorCbuAlias, mapper);
+
+		return cuentas.isEmpty() ? null : cuentas.get(0);
 	}
 
 	/*

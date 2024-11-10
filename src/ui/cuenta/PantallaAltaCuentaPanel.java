@@ -62,5 +62,5 @@ public class PantallaAltaCuentaPanel extends FormularioCuentaBancariaPanel {
 	protected void cancelarAccion() {
 		panelManager.mostrarPantallaListadoCuentas();
 	}
-	
+
 }

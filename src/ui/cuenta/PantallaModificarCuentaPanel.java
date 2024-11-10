@@ -19,8 +19,8 @@ public class PantallaModificarCuentaPanel extends FormularioCuentaBancariaPanel 
 
 	public PantallaModificarCuentaPanel(PanelManager panelManager, CuentaBancariaService service,
 			CuentaBancaria cuenta) {
-        super("Modificar Cuenta Bancaria");
-        
+		super("Modificar Cuenta Bancaria");
+
 		this.panelManager = panelManager;
 		this.service = service;
 		this.cuenta = cuenta;
@@ -52,7 +52,7 @@ public class PantallaModificarCuentaPanel extends FormularioCuentaBancariaPanel 
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(null, "Saldo inválido. Debe ser un número.", "Error de Validación",
 					JOptionPane.ERROR_MESSAGE);
-		}		
+		}
 	}
 
 	@Override
