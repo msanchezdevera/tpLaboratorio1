@@ -23,9 +23,9 @@ public class CuentaBancariaServiceTest {
 
 			System.out.println("Creando cuentas bancarias...");
 			CuentaBancaria cuenta1 = cuentaService.crearCuentaBancaria("123456789", 1000.0,
-					CuentaBancaria.CAJA_DE_AHORRO, 1);
+					CuentaBancaria.CAJA_DE_AHORRO, 1, "1111", "caja1");
 			CuentaBancaria cuenta2 = cuentaService.crearCuentaBancaria("987654321", 1500.0,
-					CuentaBancaria.CUENTA_CORRIENTE, 2);
+					CuentaBancaria.CUENTA_CORRIENTE, 2, "2222", "cuenta2");
 			System.out.println("Cuentas creadas:");
 			System.out.println(cuenta1);
 			System.out.println(cuenta2);
