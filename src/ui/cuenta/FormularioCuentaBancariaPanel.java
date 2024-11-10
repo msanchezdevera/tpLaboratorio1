@@ -1,4 +1,4 @@
-package ui;
+package ui.cuenta;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;

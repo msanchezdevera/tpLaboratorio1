@@ -1,4 +1,4 @@
-package ui;
+package ui.cuenta;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import exception.CuentaBancariaNoEncontradaException;
@@ -18,15 +17,12 @@ import exception.TextoVacioException;
 import exception.TipoCuentaBancariaInvalidaException;
 import model.CuentaBancaria;
 import service.CuentaBancariaService;
+import ui.PanelManager;
 
-public class PantallaModificarCuentaPanel extends JPanel {
+public class PantallaModificarCuentaPanel extends FormularioCuentaBancariaPanel {
 
 	private PanelManager panelManager;
 	private CuentaBancariaService service;
-	private JTextField txtSaldo;
-	private JComboBox<String> comboTipoCuenta;
-	private JButton btnGuardar;
-	private JButton btnCancelar;
 	private CuentaBancaria cuenta;
 
 	public PantallaModificarCuentaPanel(PanelManager panelManager, CuentaBancariaService service,
@@ -34,7 +30,27 @@ public class PantallaModificarCuentaPanel extends JPanel {
 		this.panelManager = panelManager;
 		this.service = service;
 		this.cuenta = cuenta;
-		armarFormulario();
+		
+		txtNumeroCuenta.setText(cuenta.getNumeroCuenta());
+		txtNumeroCuenta.setEditable(false);
+        txtSaldo.setText(String.valueOf(cuenta.getSaldo()));
+        comboTipoCuenta.setSelectedItem(cuenta.getTipoCuenta());
+        txtClienteId.setText(String.valueOf(cuenta.getClienteId()));
+        txtClienteId.setEditable(false);
+
+        setGuardarButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	actualizarCuentaBancaria();
+            }
+        });
+
+        setCancelarButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelManager.mostrarPantallaListadoCuentas();
+            }
+        });
 	}
 
 	private void armarFormulario() {
@@ -85,7 +101,7 @@ public class PantallaModificarCuentaPanel extends JPanel {
 			panelManager.mostrarPantallaListadoCuentas();
 		} catch (MenorACeroException | TextoVacioException | TipoCuentaBancariaInvalidaException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Error de Validación",
-					javax.swing.JOptionPane.ERROR_MESSAGE);
+					JOptionPane.ERROR_MESSAGE);
 		} catch (CuentaBancariaNoEncontradaException | CuentaBancariaServiceException ex) {
 			JOptionPane.showMessageDialog(null, "Error al actualizar la cuenta bancaria: " + ex.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);

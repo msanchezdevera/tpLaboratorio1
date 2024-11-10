@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 
 import model.CuentaBancaria;
 import service.CuentaBancariaService;
+import ui.cuenta.PantallaAltaCuentaPanel;
+import ui.cuenta.PantallaListadoCuentaBancariaPanel;
+import ui.cuenta.PantallaModificarCuentaPanel;
 
 public class PanelManager {
 	private JFrame frame;

@@ -1,4 +1,4 @@
-package ui;
+package ui.cuenta;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,7 @@ import exception.TextoVacioException;
 import exception.TipoCuentaBancariaInvalidaException;
 import exception.ValorNoNumericoException;
 import service.CuentaBancariaService;
+import ui.PanelManager;
 
 public class PantallaAltaCuentaPanel extends FormularioCuentaBancariaPanel {
 

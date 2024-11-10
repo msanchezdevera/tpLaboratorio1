@@ -1,4 +1,4 @@
-package ui;
+package ui.cuenta;
 
 import java.util.List;
 
@@ -52,8 +52,13 @@ public class CuentaBancariaTableModel extends AbstractTableModel {
 	public void setCuentas(List<CuentaBancaria> cuentas) {
 		this.cuentas = cuentas;
 	}
-
+	
 	public CuentaBancaria getCuentaAt(int selectedRow) {
 		return cuentas.get(selectedRow);
 	}
+	
+	public void eliminarCuenta(int row) {
+        cuentas.remove(row);
+        fireTableRowsDeleted(row, row);
+    }
 }
