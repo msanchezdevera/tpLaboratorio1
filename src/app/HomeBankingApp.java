@@ -9,6 +9,9 @@ import ui.PanelManager;
 public class HomeBankingApp {
 
 	public static void main(String[] args) {
+		// La primera vez que se usa el proyecto no va a haber cuentas bancarias creadas
+		// Se puede correr la clase CrearCuentasBancarias para crear algunas cuentas por
+		// primera vez
 		try {
 			DatabaseSetup.inicializarH2DB();
 			DatabaseSetup.crearTablaCuentaBancaria();
