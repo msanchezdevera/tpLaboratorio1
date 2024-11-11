@@ -30,7 +30,7 @@ El proyecto contiene un directorio llamado `test` con pruebas de las diferentes 
 1. Importar el proyecto en un IDE (como Eclipse).
 2. Añadir el archivo JAR de H2 al classpath del proyecto.
 
-###Ejecución
+### Ejecución
 
 1. Compilar el proyecto en el IDE.
 2. Ejecutar la clase principal HomeBankingApp ubicada en el paquete app.
