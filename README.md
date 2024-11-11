@@ -27,15 +27,17 @@ El proyecto contiene un directorio llamado `test` con pruebas de las diferentes 
 - **Git**: Para clonar el repositorio.
 
 ### Instalación
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/msanchezdevera/tpLaboratorio1.git
-   cd tpLaboratorio1
-   ```
-2. Importar el proyecto en un IDE (como Eclipse).
-3. Añadir el archivo JAR de H2 al classpath del proyecto.
+1. Importar el proyecto en un IDE (como Eclipse).
+2. Añadir el archivo JAR de H2 al classpath del proyecto.
 
-### Ejecución
+###Ejecución
+
+1. Compilar el proyecto en el IDE.
+2. Ejecutar la clase principal HomeBankingApp ubicada en el paquete app.
+
+La aplicación va a abrir una ventana gráfica.
+
+Aclaracion: la primera vez que se corre el proyecto no va a haber datos. Para esto se creo la clase CrearCuentasBancarias, la cual genera varias cuentas bancarias. Se puede correr este main al principio y luego la aplicacion, para poder tener datos iniciales.
 
 
 ## Uso del Proyecto
