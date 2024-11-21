@@ -15,6 +15,7 @@ public class HomeBankingApp {
 		try {
 			DatabaseSetup.inicializarH2DB();
 			DatabaseSetup.crearTablaCuentaBancaria();
+			DatabaseSetup.crearTablaUsuario();
 
 			CuentaBancariaService service = new CuentaBancariaService();
 

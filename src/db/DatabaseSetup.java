@@ -15,4 +15,11 @@ public class DatabaseSetup {
 		QueryExecutor.ejecutarUpdate(query);
 	}
 
+	public static void crearTablaUsuario() throws DatabaseException {
+		String query = "CREATE TABLE IF NOT EXISTS usuario (" + "id INT AUTO_INCREMENT PRIMARY KEY, "
+				+ "nombre VARCHAR(255), " + "apellido VARCHAR(255), " + "email VARCHAR(255), "
+				+ "contrasena VARCHAR(255), " + "tipoUsuario VARCHAR(255))";
+		QueryExecutor.ejecutarUpdate(query);
+	}
+
 }
