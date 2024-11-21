@@ -4,23 +4,30 @@ import javax.swing.JFrame;
 
 import model.CuentaBancaria;
 import service.CuentaBancariaService;
+import service.UsuarioService;
 import ui.cuenta.PantallaAltaCuentaPanel;
 import ui.cuenta.PantallaListadoCuentaBancariaPanel;
 import ui.cuenta.PantallaModificarCuentaPanel;
 import ui.cuenta.PantallaTransferenciaPanel;
+import ui.usuario.PantallaListadoUsuarioPanel;
 
 public class PanelManager {
 	private JFrame frame;
 
+	// CuentaBancaria
 	private PantallaListadoCuentaBancariaPanel pantallaListadoCuentasPanel;
 	private PantallaAltaCuentaPanel pantallaAltaCuentaPanel;
 	private PantallaModificarCuentaPanel pantallaModificarCuentaPanel;
 	private PantallaTransferenciaPanel pantallaTransferenciaPanel;
-
 	private CuentaBancariaService cuentaBancariaService;
+	
+	// Usuario
+	private PantallaListadoUsuarioPanel pantallaListadoUsuarioPanel;
+	private UsuarioService usuarioService;
 
-	public PanelManager(CuentaBancariaService cuentaBancariaService) {
+	public PanelManager(CuentaBancariaService cuentaBancariaService, UsuarioService usuarioService) {
 		this.cuentaBancariaService = cuentaBancariaService;
+		this.usuarioService = usuarioService;
 		armarManager();
 	}
 
@@ -30,6 +37,8 @@ public class PanelManager {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantallaListadoCuentasPanel = new PantallaListadoCuentaBancariaPanel(this, cuentaBancariaService);
 		pantallaAltaCuentaPanel = new PantallaAltaCuentaPanel(this, cuentaBancariaService);
+		pantallaListadoUsuarioPanel = new PantallaListadoUsuarioPanel(this, usuarioService);
+
 	}
 
 	public void showFrame() {
@@ -63,6 +72,14 @@ public class PanelManager {
 		frame.getContentPane().removeAll();
 		pantallaTransferenciaPanel = new PantallaTransferenciaPanel(this, cuentaBancariaService, cuentaOrigen);
 		frame.getContentPane().add(pantallaTransferenciaPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
+	}
+	
+	public void mostrarPantallaListadoUsuarios() {
+		pantallaListadoUsuarioPanel.actualizarTabla();
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaListadoUsuarioPanel);
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 	}
