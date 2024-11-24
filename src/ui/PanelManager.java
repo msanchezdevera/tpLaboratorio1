@@ -3,13 +3,16 @@ package ui;
 import javax.swing.JFrame;
 
 import model.CuentaBancaria;
+import model.Usuario;
 import service.CuentaBancariaService;
 import service.UsuarioService;
 import ui.cuenta.PantallaAltaCuentaPanel;
 import ui.cuenta.PantallaListadoCuentaBancariaPanel;
 import ui.cuenta.PantallaModificarCuentaPanel;
 import ui.cuenta.PantallaTransferenciaPanel;
+import ui.usuario.PantallaAltaUsuarioPanel;
 import ui.usuario.PantallaListadoUsuarioPanel;
+import ui.usuario.PantallaModificarUsuarioPanel;
 
 public class PanelManager {
 	private JFrame frame;
@@ -20,9 +23,11 @@ public class PanelManager {
 	private PantallaModificarCuentaPanel pantallaModificarCuentaPanel;
 	private PantallaTransferenciaPanel pantallaTransferenciaPanel;
 	private CuentaBancariaService cuentaBancariaService;
-	
+
 	// Usuario
 	private PantallaListadoUsuarioPanel pantallaListadoUsuarioPanel;
+	private PantallaModificarUsuarioPanel pantallaModificarUsuarioPanel;
+	private PantallaAltaUsuarioPanel pantallaAltaUsuarioPanel;
 	private UsuarioService usuarioService;
 
 	public PanelManager(CuentaBancariaService cuentaBancariaService, UsuarioService usuarioService) {
@@ -75,11 +80,27 @@ public class PanelManager {
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 	}
-	
+
 	public void mostrarPantallaListadoUsuarios() {
 		pantallaListadoUsuarioPanel.actualizarTabla();
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(pantallaListadoUsuarioPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
+	}
+
+	public void mostrarPantallaAltaUsuario() {
+		pantallaAltaUsuarioPanel = new PantallaAltaUsuarioPanel(this, usuarioService);
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaAltaUsuarioPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
+	}
+
+	public void mostrarPantallaModificarUsuario(Usuario usuario) {
+		pantallaModificarUsuarioPanel = new PantallaModificarUsuarioPanel(this, usuarioService, usuario);
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaModificarUsuarioPanel);
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 	}

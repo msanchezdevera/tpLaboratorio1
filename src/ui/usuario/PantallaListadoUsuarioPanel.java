@@ -52,9 +52,8 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 			JScrollPane scrollPane = new JScrollPane(tableUsuarios);
 			add(scrollPane, BorderLayout.CENTER);
 		} catch (UsuarioServiceException e) {
-			JOptionPane.showMessageDialog(this,
-					"Error al obtener usuarios, pruebe más tarde: " + e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al obtener usuarios, pruebe más tarde: " + e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		JPanel botonesPanel = new JPanel();
@@ -63,7 +62,7 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 		btnAgregarUsuario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Código para mostrar la pantalla de alta usuario (a implementar)
+				panelManager.mostrarPantallaAltaUsuario();
 			}
 		});
 		botonesPanel.add(btnAgregarUsuario);
@@ -95,9 +94,8 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 			tableModel.setUsuarios(usuarios);
 			tableModel.fireTableDataChanged();
 		} catch (UsuarioServiceException e) {
-			JOptionPane.showMessageDialog(this,
-					"Error al obtener usuarios, pruebe más tarde: " + e.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al obtener usuarios, pruebe más tarde: " + e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -105,7 +103,7 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 		int selectedRow = tableUsuarios.getSelectedRow();
 		if (selectedRow != -1) {
 			Usuario usuario = tableModel.getUsuarioAt(selectedRow);
-			// Código para mostrar la pantalla de modificación de usuario (a implementar)
+			panelManager.mostrarPantallaModificarUsuario(usuario);
 		} else {
 			JOptionPane.showMessageDialog(null, "Seleccione un usuario para modificar.", "Error",
 					JOptionPane.WARNING_MESSAGE);
@@ -115,8 +113,8 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 	private void eliminarUsuario() {
 		int selectedRow = tableUsuarios.getSelectedRow();
 		if (selectedRow == -1) {
-			JOptionPane.showMessageDialog(PantallaListadoUsuarioPanel.this,
-					"Seleccione un usuario para eliminar.", "Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(PantallaListadoUsuarioPanel.this, "Seleccione un usuario para eliminar.",
+					"Error", JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 
