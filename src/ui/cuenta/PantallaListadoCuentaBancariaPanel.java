@@ -29,6 +29,7 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 	private JButton btnModificarCuenta;
 	private JButton btnEliminarCuenta;
 	private JButton btnTransferir;
+	private JButton btnVolverInicio;
 
 	private CuentaBancariaService service;
 
@@ -95,6 +96,15 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 			}
 		});
 		botonesPanel.add(btnTransferir);
+
+		btnVolverInicio = new JButton("Volver a Inicio");
+		btnVolverInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelManager.mostrarPantallaHome();
+			}
+		});
+		botonesPanel.add(btnVolverInicio);
 
 		add(botonesPanel, BorderLayout.SOUTH);
 	}

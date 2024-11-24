@@ -28,9 +28,10 @@ public class CuentaBancaria {
 	private Integer clienteId;
 	private String cbu;
 	private String alias;
+	private Usuario usuario;
 
 	public CuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, Integer clienteId, String cbu,
-			String alias) throws TipoCuentaBancariaInvalidaException {
+			String alias, Usuario usuario) throws TipoCuentaBancariaInvalidaException {
 		validarTipoCuenta(tipoCuenta);
 		this.numeroCuenta = numeroCuenta;
 		this.saldo = saldo;
@@ -40,10 +41,11 @@ public class CuentaBancaria {
 		this.alias = alias;
 		this.cbu = cbu;
 		this.alias = alias;
+		this.usuario = usuario;
 	}
 
 	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, Integer clienteId, String cbu,
-			String alias) throws TipoCuentaBancariaInvalidaException {
+			String alias, Usuario usuario) throws TipoCuentaBancariaInvalidaException {
 		validarTipoCuenta(tipoCuenta);
 		this.id = id;
 		this.numeroCuenta = numeroCuenta;
@@ -52,6 +54,7 @@ public class CuentaBancaria {
 		this.clienteId = clienteId;
 		this.cbu = cbu;
 		this.alias = alias;
+		this.usuario = usuario;
 	}
 
 	private void validarTipoCuenta(String tipoCuenta) throws TipoCuentaBancariaInvalidaException {
@@ -116,10 +119,19 @@ public class CuentaBancaria {
 		this.alias = alias;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public String toString() {
-		return "CuentaBancaria{id='" + id + "',numeroCuenta='" + numeroCuenta + "', saldo=" + saldo + ", tipoCuenta='"
-				+ tipoCuenta + "', clienteId=" + clienteId + ", cbu='" + cbu + "', alias='" + alias + "'}";
+		return "CuentaBancaria{id=" + id + ", numeroCuenta='" + numeroCuenta + "', saldo=" + saldo + ", tipoCuenta='"
+				+ tipoCuenta + "', cbu='" + cbu + "', alias='" + alias + "', usuarioId="
+				+ (usuario != null ? usuario.getId() : "null") + "}";
 	}
 
 }

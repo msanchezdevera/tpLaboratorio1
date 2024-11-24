@@ -28,6 +28,7 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 	private JButton btnAgregarUsuario;
 	private JButton btnModificarUsuario;
 	private JButton btnEliminarUsuario;
+	private JButton btnVolverInicio;
 
 	private UsuarioService service;
 
@@ -84,6 +85,15 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 			}
 		});
 		botonesPanel.add(btnEliminarUsuario);
+
+		btnVolverInicio = new JButton("Volver a Inicio");
+		btnVolverInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelManager.mostrarPantallaHome();
+			}
+		});
+		botonesPanel.add(btnVolverInicio);
 
 		add(botonesPanel, BorderLayout.SOUTH);
 	}

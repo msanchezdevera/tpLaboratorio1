@@ -1,7 +1,5 @@
 package app;
 
-import javax.swing.JOptionPane;
-
 import db.ConnectionManager;
 import db.DatabaseSetup;
 import exception.DatabaseException;
@@ -25,16 +23,8 @@ public class HomeBankingApp {
 
 			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService);
 			manager.showFrame();
-			
-			String[] opciones = {"Usuarios", "Cuentas Bancarias"};
-            int eleccion = JOptionPane.showOptionDialog(null, "Seleccione una opción para comenzar:",
-                    "Inicio", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[0]);
 
-            if (eleccion == 0) {
-                manager.mostrarPantallaListadoUsuarios();
-            } else {
-                manager.mostrarPantallaListadoCuentas();
-            }
+			manager.mostrarPantallaHome();
 		} catch (DatabaseException e) {
 			System.err.println("Ocurrió un error: " + e.getMessage() + " - " + e.getCause());
 		} finally {

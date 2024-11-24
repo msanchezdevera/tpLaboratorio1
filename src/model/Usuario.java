@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Usuario {
@@ -19,7 +21,8 @@ public class Usuario {
 	private String apellido;
 	private String email;
 	private String contrasena;
-	private String tipoUsuario; // Puede ser ADMIN o CLIENTE.
+	private String tipoUsuario;
+	private List<CuentaBancaria> cuentas;
 
 	public Usuario(String nombre, String apellido, String email, String contrasena, String tipoUsuario)
 			throws IllegalArgumentException {
@@ -29,6 +32,7 @@ public class Usuario {
 		this.email = email;
 		this.contrasena = contrasena;
 		this.tipoUsuario = tipoUsuario;
+		this.cuentas = new ArrayList<>();
 	}
 
 	public Usuario(int id, String nombre, String apellido, String email, String contrasena, String tipoUsuario)
@@ -40,6 +44,7 @@ public class Usuario {
 		this.email = email;
 		this.contrasena = contrasena;
 		this.tipoUsuario = tipoUsuario;
+		this.cuentas = new ArrayList<>();
 	}
 
 	private void validarTipoUsuario(String tipoUsuario) {
@@ -95,6 +100,14 @@ public class Usuario {
 	public void setTipoUsuario(String tipoUsuario) {
 		validarTipoUsuario(tipoUsuario);
 		this.tipoUsuario = tipoUsuario;
+	}
+
+	public List<CuentaBancaria> getCuentas() {
+		return cuentas;
+	}
+
+	public void agregarCuenta(CuentaBancaria cuenta) {
+		cuentas.add(cuenta);
 	}
 
 	@Override

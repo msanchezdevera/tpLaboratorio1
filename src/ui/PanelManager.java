@@ -17,6 +17,8 @@ import ui.usuario.PantallaModificarUsuarioPanel;
 public class PanelManager {
 	private JFrame frame;
 
+	private PantallaHomePanel pantallaHomePanel;
+
 	// CuentaBancaria
 	private PantallaListadoCuentaBancariaPanel pantallaListadoCuentasPanel;
 	private PantallaAltaCuentaPanel pantallaAltaCuentaPanel;
@@ -40,6 +42,7 @@ public class PanelManager {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pantallaHomePanel = new PantallaHomePanel(this);
 		pantallaListadoCuentasPanel = new PantallaListadoCuentaBancariaPanel(this, cuentaBancariaService);
 		pantallaAltaCuentaPanel = new PantallaAltaCuentaPanel(this, cuentaBancariaService);
 		pantallaListadoUsuarioPanel = new PantallaListadoUsuarioPanel(this, usuarioService);
@@ -48,6 +51,13 @@ public class PanelManager {
 
 	public void showFrame() {
 		frame.setVisible(true);
+	}
+
+	public void mostrarPantallaHome() {
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaHomePanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
 	}
 
 	public void mostrarPantallaListadoCuentas() {
