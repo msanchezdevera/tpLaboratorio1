@@ -7,6 +7,7 @@ import exception.CuentaBancariaServiceException;
 import exception.MenorACeroException;
 import exception.TextoVacioException;
 import exception.TipoCuentaBancariaInvalidaException;
+import exception.UsuarioNoEncontradoException;
 import model.CuentaBancaria;
 import service.CuentaBancariaService;
 import ui.PanelManager;
@@ -29,7 +30,7 @@ public class PantallaModificarCuentaPanel extends FormularioCuentaBancariaPanel 
 		txtNumeroCuenta.setEditable(false);
 		txtSaldo.setText(String.valueOf(cuenta.getSaldo()));
 		comboTipoCuenta.setSelectedItem(cuenta.getTipoCuenta());
-		txtClienteId.setText(String.valueOf(cuenta.getClienteId()));
+		txtClienteId.setText(String.valueOf(cuenta.getUsuario().getId()));
 		txtClienteId.setEditable(false);
 		txtCbu.setText(cuenta.getCbu());
 		txtAlias.setText(cuenta.getAlias());
@@ -40,8 +41,8 @@ public class PantallaModificarCuentaPanel extends FormularioCuentaBancariaPanel 
 		try {
 			double nuevoSaldo = Double.parseDouble(txtSaldo.getText());
 			String nuevoTipoCuenta = (String) comboTipoCuenta.getSelectedItem();
-			service.actualizarCuentaBancaria(cuenta.getId(), nuevoSaldo, nuevoTipoCuenta, txtCbu.getText(),
-					txtAlias.getText());
+			service.actualizarCuentaBancaria(cuenta.getId(), nuevoSaldo, nuevoTipoCuenta, cuenta.getUsuario().getId(),
+					txtCbu.getText(), txtAlias.getText());
 			JOptionPane.showMessageDialog(null, "Cuenta actualizada exitosamente");
 			panelManager.mostrarPantallaListadoCuentas();
 		} catch (MenorACeroException | TextoVacioException | TipoCuentaBancariaInvalidaException ex) {
@@ -51,6 +52,9 @@ public class PantallaModificarCuentaPanel extends FormularioCuentaBancariaPanel 
 					JOptionPane.ERROR_MESSAGE);
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(null, "Saldo inválido. Debe ser un número.", "Error de Validación",
+					JOptionPane.ERROR_MESSAGE);
+		} catch (UsuarioNoEncontradoException e) {
+			JOptionPane.showMessageDialog(null, "Usuario no encontrado.", "Error de Validación",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

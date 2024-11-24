@@ -30,7 +30,7 @@ public class CuentaBancariaH2DAO implements Dao<CuentaBancaria> {
 	public int insertar(CuentaBancaria cuenta) throws DatabaseException {
 		String query = String.format(
 				"INSERT INTO cuenta_bancaria (numeroCuenta, saldo, tipoCuenta, clienteId, cbu, alias) VALUES ('%s', %f, '%s', %d, '%s', '%s')",
-				cuenta.getNumeroCuenta(), cuenta.getSaldo(), cuenta.getTipoCuenta(), cuenta.getClienteId(),
+				cuenta.getNumeroCuenta(), cuenta.getSaldo(), cuenta.getTipoCuenta(), cuenta.getUsuario().getId(),
 				cuenta.getCbu(), cuenta.getAlias());
 		int idGenerado = QueryExecutor.ejecutarInsert(query);
 		cuenta.setId(idGenerado);
@@ -42,7 +42,7 @@ public class CuentaBancariaH2DAO implements Dao<CuentaBancaria> {
 	public void actualizar(CuentaBancaria entidad) throws DatabaseException {
 		String query = String.format(
 				"UPDATE cuenta_bancaria SET saldo = %.2f, tipoCuenta = '%s', clienteId = %d, cbu = '%s', alias = '%s' WHERE id = %d",
-				entidad.getSaldo(), entidad.getTipoCuenta(), entidad.getClienteId(), entidad.getCbu(),
+				entidad.getSaldo(), entidad.getTipoCuenta(), entidad.getUsuario().getId(), entidad.getCbu(),
 				entidad.getAlias(), entidad.getId());
 		QueryExecutor.ejecutarUpdate(query);
 	}

@@ -39,7 +39,7 @@ public class CuentaBancariaTableModel extends AbstractTableModel {
 		case 3:
 			return cuenta.getTipoCuenta();
 		case 4:
-			return cuenta.getClienteId();
+			return cuenta.getUsuario().getId();
 		case 5:
 			return cuenta.getCbu();
 		case 6:

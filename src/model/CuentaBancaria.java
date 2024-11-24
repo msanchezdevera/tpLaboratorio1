@@ -25,18 +25,16 @@ public class CuentaBancaria {
 	private String numeroCuenta;
 	private double saldo;
 	private String tipoCuenta;
-	private Integer clienteId;
 	private String cbu;
 	private String alias;
 	private Usuario usuario;
 
-	public CuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, Integer clienteId, String cbu,
-			String alias, Usuario usuario) throws TipoCuentaBancariaInvalidaException {
+	public CuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
+			Usuario usuario) throws TipoCuentaBancariaInvalidaException {
 		validarTipoCuenta(tipoCuenta);
 		this.numeroCuenta = numeroCuenta;
 		this.saldo = saldo;
 		this.tipoCuenta = tipoCuenta;
-		this.clienteId = clienteId;
 		this.cbu = cbu;
 		this.alias = alias;
 		this.cbu = cbu;
@@ -44,17 +42,27 @@ public class CuentaBancaria {
 		this.usuario = usuario;
 	}
 
-	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, Integer clienteId, String cbu,
-			String alias, Usuario usuario) throws TipoCuentaBancariaInvalidaException {
+	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
+			Usuario usuario) throws TipoCuentaBancariaInvalidaException {
 		validarTipoCuenta(tipoCuenta);
 		this.id = id;
 		this.numeroCuenta = numeroCuenta;
 		this.saldo = saldo;
 		this.tipoCuenta = tipoCuenta;
-		this.clienteId = clienteId;
 		this.cbu = cbu;
 		this.alias = alias;
 		this.usuario = usuario;
+	}
+
+	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias)
+			throws TipoCuentaBancariaInvalidaException {
+		validarTipoCuenta(tipoCuenta);
+		this.id = id;
+		this.numeroCuenta = numeroCuenta;
+		this.saldo = saldo;
+		this.tipoCuenta = tipoCuenta;
+		this.cbu = cbu;
+		this.alias = alias;
 	}
 
 	private void validarTipoCuenta(String tipoCuenta) throws TipoCuentaBancariaInvalidaException {
@@ -93,14 +101,6 @@ public class CuentaBancaria {
 
 	public void setTipoCuenta(String tipoCuenta) {
 		this.tipoCuenta = tipoCuenta;
-	}
-
-	public Integer getClienteId() {
-		return clienteId;
-	}
-
-	public void setClienteId(Integer clienteId) {
-		this.clienteId = clienteId;
 	}
 
 	public String getCbu() {
