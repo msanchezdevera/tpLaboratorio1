@@ -28,6 +28,7 @@ public class CuentaBancaria {
 	private String cbu;
 	private String alias;
 	private Usuario usuario;
+	private Integer clienteId;
 
 	public CuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
 			Usuario usuario) throws TipoCuentaBancariaInvalidaException {
@@ -54,7 +55,7 @@ public class CuentaBancaria {
 		this.usuario = usuario;
 	}
 
-	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias)
+	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias, int clienteId)
 			throws TipoCuentaBancariaInvalidaException {
 		validarTipoCuenta(tipoCuenta);
 		this.id = id;
@@ -63,6 +64,7 @@ public class CuentaBancaria {
 		this.tipoCuenta = tipoCuenta;
 		this.cbu = cbu;
 		this.alias = alias;
+		this.setClienteId(clienteId);
 	}
 
 	private void validarTipoCuenta(String tipoCuenta) throws TipoCuentaBancariaInvalidaException {
@@ -125,6 +127,14 @@ public class CuentaBancaria {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Integer getClienteId() {
+		return clienteId;
+	}
+
+	public void setClienteId(Integer clienteId) {
+		this.clienteId = clienteId;
 	}
 
 	@Override

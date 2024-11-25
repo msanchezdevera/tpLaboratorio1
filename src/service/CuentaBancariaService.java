@@ -26,7 +26,6 @@ public class CuentaBancariaService {
 		this.usuarioDAO = new UsuarioH2DAO();
 	}
 
-	// Método para crear una cuenta bancaria asociada a un usuario existente
 	public CuentaBancaria crearCuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, int usuarioId,
 			String cbu, String alias)
 			throws TipoCuentaBancariaInvalidaException, TextoVacioException, MenorACeroException,
@@ -55,7 +54,12 @@ public class CuentaBancariaService {
 
 	public List<CuentaBancaria> obtenerTodasLasCuentas() throws CuentaBancariaServiceException {
 		try {
-			return cuentaBancariaDAO.listarTodos();
+			List<CuentaBancaria> cuentas = cuentaBancariaDAO.listarTodos();
+			for (CuentaBancaria cuenta : cuentas) {
+				Usuario usuario = usuarioDAO.buscarPorId(cuenta.getClienteId());
+				cuenta.setUsuario(usuario);
+			}
+			return cuentas;
 		} catch (DatabaseException e) {
 			throw new CuentaBancariaServiceException("Error al obtener todas las cuentas bancarias", e);
 		}
@@ -69,6 +73,10 @@ public class CuentaBancariaService {
 				throw new CuentaBancariaNoEncontradaException(
 						"La cuenta bancaria con ID " + id + " no fue encontrada.");
 			}
+			
+			Usuario usuario = usuarioDAO.buscarPorId(cuenta.getClienteId());
+			cuenta.setUsuario(usuario);
+			
 			return cuenta;
 		} catch (DatabaseException e) {
 			throw new CuentaBancariaServiceException("Error al obtener la cuenta bancaria con ID " + id, e);

@@ -18,7 +18,7 @@ public class CuentaBancariaMapper implements DaoMapper<CuentaBancaria> {
 		String alias = resultSet.getString("alias");
 
 		try {
-			return new CuentaBancaria(id, numeroCuenta, saldo, tipoCuenta, cbu, alias);
+			return new CuentaBancaria(id, numeroCuenta, saldo, tipoCuenta, cbu, alias, clienteId);
 		} catch (Exception e) {
 			throw new SQLException("Error al mapear el objeto CuentaBancaria", e);
 		}
