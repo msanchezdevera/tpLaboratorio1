@@ -55,8 +55,8 @@ public class CuentaBancaria {
 		this.usuario = usuario;
 	}
 
-	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias, int clienteId)
-			throws TipoCuentaBancariaInvalidaException {
+	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
+			int clienteId) throws TipoCuentaBancariaInvalidaException {
 		validarTipoCuenta(tipoCuenta);
 		this.id = id;
 		this.numeroCuenta = numeroCuenta;
@@ -128,7 +128,7 @@ public class CuentaBancaria {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public Integer getClienteId() {
 		return clienteId;
 	}

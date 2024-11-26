@@ -24,7 +24,7 @@ public class HomeBankingApp {
 			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService);
 			manager.showFrame();
 
-			manager.mostrarPantallaHome();
+			manager.mostrarPantallaLogin();
 		} catch (DatabaseException e) {
 			System.err.println("Ocurrió un error: " + e.getMessage() + " - " + e.getCause());
 		} finally {

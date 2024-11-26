@@ -53,11 +53,11 @@ public class UsuarioH2DAO implements Dao<Usuario> {
 	}
 
 	/*
-	 * Buscar un usuario por email. Este método recibirá un email como input y
-	 * buscará un usuario por su email.
+	 * Buscar un usuario por email y contraseña.
 	 */
-	public Usuario buscarPorEmail(String email) throws DatabaseException {
-		String query = String.format("SELECT * FROM usuario WHERE email = '%s'", email);
+	public Usuario buscarPorEmailYContrasena(String email, String contrasena) throws DatabaseException {
+		String query = String.format("SELECT * FROM usuario WHERE email = '%s' and contrasena = '%s'", email,
+				contrasena);
 		List<Usuario> usuarios = QueryExecutor.ejecutarSelect(query, mapper);
 		return usuarios.isEmpty() ? null : usuarios.get(0);
 	}

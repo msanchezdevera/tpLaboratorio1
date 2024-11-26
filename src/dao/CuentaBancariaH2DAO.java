@@ -8,6 +8,7 @@ import db.ConnectionManager;
 import db.QueryExecutor;
 import exception.DatabaseException;
 import model.CuentaBancaria;
+import model.Usuario;
 
 public class CuentaBancariaH2DAO implements Dao<CuentaBancaria> {
 
@@ -115,6 +116,11 @@ public class CuentaBancariaH2DAO implements Dao<CuentaBancaria> {
 				}
 			}
 		}
+	}
+
+	public List<CuentaBancaria> listarCuentasUsuario(Usuario usuario) throws DatabaseException {
+		String queryPorId = String.format("SELECT * FROM cuenta_bancaria WHERE clienteId = %d", usuario.getId());
+		return QueryExecutor.ejecutarSelect(queryPorId, mapper);
 	}
 
 	private void actualizarSaldo(CuentaBancaria cuenta) throws DatabaseException {

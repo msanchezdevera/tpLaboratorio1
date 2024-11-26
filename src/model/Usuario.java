@@ -53,6 +53,10 @@ public class Usuario {
 		}
 	}
 
+	public boolean esAdmin() {
+		return getTipoUsuario().equals(Usuario.ADMIN);
+	}
+
 	public Integer getId() {
 		return id;
 	}

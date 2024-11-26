@@ -24,6 +24,7 @@ public class CuentaBancariaService {
 	public CuentaBancariaService() {
 		this.cuentaBancariaDAO = new CuentaBancariaH2DAO();
 		this.usuarioDAO = new UsuarioH2DAO();
+
 	}
 
 	public CuentaBancaria crearCuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, int usuarioId,
@@ -65,6 +66,18 @@ public class CuentaBancariaService {
 		}
 	}
 
+	public List<CuentaBancaria> obtenerCuentasBancarias(Usuario usuario) throws CuentaBancariaServiceException {
+		try {
+			List<CuentaBancaria> cuentas = cuentaBancariaDAO.listarCuentasUsuario(usuario);
+			for (CuentaBancaria cuenta : cuentas) {
+				cuenta.setUsuario(usuario);
+			}
+			return cuentas;
+		} catch (DatabaseException e) {
+			throw new CuentaBancariaServiceException("Error al obtener las cuentas bancarias", e);
+		}
+	}
+
 	public CuentaBancaria obtenerCuentaPorId(int id)
 			throws CuentaBancariaNoEncontradaException, CuentaBancariaServiceException {
 		try {
@@ -73,10 +86,10 @@ public class CuentaBancariaService {
 				throw new CuentaBancariaNoEncontradaException(
 						"La cuenta bancaria con ID " + id + " no fue encontrada.");
 			}
-			
+
 			Usuario usuario = usuarioDAO.buscarPorId(cuenta.getClienteId());
 			cuenta.setUsuario(usuario);
-			
+
 			return cuenta;
 		} catch (DatabaseException e) {
 			throw new CuentaBancariaServiceException("Error al obtener la cuenta bancaria con ID " + id, e);

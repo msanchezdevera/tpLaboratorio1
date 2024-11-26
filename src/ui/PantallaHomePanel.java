@@ -8,12 +8,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.Usuario;
+
 public class PantallaHomePanel extends JPanel {
 
 	private PanelManager panelManager;
+	private Usuario usuario;
 
-	public PantallaHomePanel(PanelManager panelManager) {
+	public PantallaHomePanel(PanelManager panelManager, Usuario usuario) {
 		this.panelManager = panelManager;
+		this.usuario = usuario;
 		armarPantallaHome();
 	}
 
@@ -24,22 +28,27 @@ public class PantallaHomePanel extends JPanel {
 		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
 		add(lblTitulo);
 
-		JButton btnVerCuentas = new JButton("Ver Cuentas Bancarias");
-		btnVerCuentas.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelManager.mostrarPantallaListadoCuentas();
-			}
-		});
-		add(btnVerCuentas);
+		if (usuario.esAdmin()) {
+			JButton btnVerUsuarios = new JButton("Listado de Usuarios");
+			btnVerUsuarios.addActionListener(e -> panelManager.mostrarPantallaListadoUsuarios());
+			add(btnVerUsuarios);
 
-		JButton btnVerUsuarios = new JButton("Ver Usuarios");
-		btnVerUsuarios.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelManager.mostrarPantallaListadoUsuarios();
-			}
-		});
-		add(btnVerUsuarios);
+			JButton btnVerCuentas = new JButton("Listado de Cuentas");
+			btnVerCuentas.addActionListener(e -> panelManager.mostrarPantallaListadoCuentas());
+			add(btnVerCuentas);
+
+			JButton btnVerTarjetas = new JButton("Listado de Tarjetas");
+			btnVerTarjetas.addActionListener(e -> panelManager.mostrarPantallaListadoTarjetas());
+			add(btnVerTarjetas);
+
+		} else {
+			JButton btnMisCuentas = new JButton("Mis Cuentas");
+			btnMisCuentas.addActionListener(e -> panelManager.mostrarPantallaMisCuentas(usuario));
+			add(btnMisCuentas);
+
+			JButton btnMisTarjetas = new JButton("Mis Tarjetas");
+			btnMisTarjetas.addActionListener(e -> panelManager.mostrarPantallaMisTarjetas(usuario));
+			add(btnMisTarjetas);
+		}
 	}
 }
