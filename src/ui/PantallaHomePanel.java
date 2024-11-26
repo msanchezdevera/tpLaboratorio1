@@ -19,7 +19,7 @@ public class PantallaHomePanel extends JPanel {
 		this.panelManager = panelManager;
 		this.usuario = usuario;
 		armarPantallaHome();
-		
+
 	}
 
 	private void armarPantallaHome() {

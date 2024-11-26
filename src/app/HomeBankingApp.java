@@ -4,6 +4,7 @@ import db.ConnectionManager;
 import db.DatabaseSetup;
 import exception.DatabaseException;
 import service.CuentaBancariaService;
+import service.MovimientoService;
 import service.TarjetaService;
 import service.UsuarioService;
 import ui.PanelManager;
@@ -18,12 +19,16 @@ public class HomeBankingApp {
 			DatabaseSetup.inicializarH2DB();
 			DatabaseSetup.crearTablaCuentaBancaria();
 			DatabaseSetup.crearTablaUsuario();
+			DatabaseSetup.crearTablaTarjeta();
+			DatabaseSetup.crearTablaMovimiento();
 
 			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService();
 			UsuarioService usuarioService = new UsuarioService();
 			TarjetaService tarjetaService = new TarjetaService();
+			MovimientoService movimientoService = new MovimientoService();
 
-			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService, tarjetaService);
+			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService, tarjetaService,
+					movimientoService);
 			manager.showFrame();
 
 			manager.mostrarPantallaLogin();

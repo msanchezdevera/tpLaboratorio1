@@ -123,7 +123,7 @@ public class CuentaBancariaH2DAO implements Dao<CuentaBancaria> {
 		return QueryExecutor.ejecutarSelect(queryPorId, mapper);
 	}
 
-	private void actualizarSaldo(CuentaBancaria cuenta) throws DatabaseException {
+	public void actualizarSaldo(CuentaBancaria cuenta) throws DatabaseException {
 		String queryOrigen = String.format("UPDATE cuenta_bancaria SET saldo = %.2f WHERE id = %d", cuenta.getSaldo(),
 				cuenta.getId());
 		QueryExecutor.ejecutarUpdate(queryOrigen);

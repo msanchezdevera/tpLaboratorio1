@@ -83,7 +83,7 @@ public class QueryExecutor {
 					System.err.println("Error al realizar rollback: " + rollbackEx.getMessage());
 				}
 			}
-			throw new DatabaseException("Error al ejecutar insert", e);
+			throw new DatabaseException("Error al ejecutar insert. " + e.getMessage(), e);
 		} finally {
 			cerrarResultSet(generatedKeys);
 			cerrarStatement(statement);

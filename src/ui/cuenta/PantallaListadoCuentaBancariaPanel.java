@@ -30,6 +30,7 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 	private JButton btnModificarCuenta;
 	private JButton btnEliminarCuenta;
 	private JButton btnTransferir;
+	private JButton btnVerMovimientos;
 	private JButton btnVolverInicio;
 
 	private CuentaBancariaService service;
@@ -92,6 +93,15 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 			}
 		});
 		botonesPanel.add(btnTransferir);
+
+		btnVerMovimientos = new JButton("Ver Movimientos");
+		btnVerMovimientos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				verMovimientosCuenta();
+			}
+		});
+		botonesPanel.add(btnVerMovimientos);
 
 		btnVolverInicio = new JButton("Volver a Inicio");
 		btnVolverInicio.addActionListener(new ActionListener() {
@@ -188,4 +198,15 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 		}
 	}
 
+	private void verMovimientosCuenta() {
+		int selectedRow = tableCuentas.getSelectedRow();
+		if (selectedRow != -1) {
+			CuentaBancaria cuenta = tableModel.getCuentaAt(selectedRow);
+			panelManager.mostrarPantallaListadoMovimientos(cuenta);
+		} else {
+			JOptionPane.showMessageDialog(PantallaListadoCuentaBancariaPanel.this,
+					"Debe seleccionar una cuenta para ver los movimientos.", "Advertencia",
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
 }

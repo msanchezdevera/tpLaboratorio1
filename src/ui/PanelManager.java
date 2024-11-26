@@ -6,12 +6,14 @@ import model.CuentaBancaria;
 import model.Tarjeta;
 import model.Usuario;
 import service.CuentaBancariaService;
+import service.MovimientoService;
 import service.TarjetaService;
 import service.UsuarioService;
 import ui.cuenta.PantallaAltaCuentaPanel;
 import ui.cuenta.PantallaListadoCuentaBancariaPanel;
 import ui.cuenta.PantallaModificarCuentaPanel;
 import ui.cuenta.PantallaTransferenciaPanel;
+import ui.movimiento.PantallaListadoMovimientosPanel;
 import ui.tarjeta.PantallaAltaTarjetaPanel;
 import ui.tarjeta.PantallaListadoTarjetasPanel;
 import ui.tarjeta.PantallaModificarTarjetaPanel;
@@ -44,13 +46,17 @@ public class PanelManager {
 	private PantallaAltaUsuarioPanel pantallaAltaUsuarioPanel;
 	private UsuarioService usuarioService;
 
+	// Movimiento
+	private MovimientoService movimientoService;
+
 	private Usuario usuarioLogueado;
 
 	public PanelManager(CuentaBancariaService cuentaBancariaService, UsuarioService usuarioService,
-			TarjetaService tarjetaService) {
+			TarjetaService tarjetaService, MovimientoService movimientoService) {
 		this.cuentaBancariaService = cuentaBancariaService;
 		this.usuarioService = usuarioService;
 		this.tarjetaService = tarjetaService;
+		this.movimientoService = movimientoService;
 		armarManager();
 	}
 
@@ -177,6 +183,16 @@ public class PanelManager {
 		pantallaModificarTarjetaPanel = new PantallaModificarTarjetaPanel(this, tarjetaService, tarjeta);
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(pantallaModificarTarjetaPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
+	}
+
+	public void mostrarPantallaListadoMovimientos(CuentaBancaria cuenta) {
+		PantallaListadoMovimientosPanel pantallaListadoMovimientos = new PantallaListadoMovimientosPanel(this,
+				movimientoService, cuenta);
+		pantallaListadoMovimientos.actualizarTabla();
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaListadoMovimientos);
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 	}
