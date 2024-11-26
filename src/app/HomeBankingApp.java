@@ -4,6 +4,7 @@ import db.ConnectionManager;
 import db.DatabaseSetup;
 import exception.DatabaseException;
 import service.CuentaBancariaService;
+import service.TarjetaService;
 import service.UsuarioService;
 import ui.PanelManager;
 
@@ -20,8 +21,9 @@ public class HomeBankingApp {
 
 			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService();
 			UsuarioService usuarioService = new UsuarioService();
+			TarjetaService tarjetaService = new TarjetaService();
 
-			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService);
+			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService, tarjetaService);
 			manager.showFrame();
 
 			manager.mostrarPantallaLogin();

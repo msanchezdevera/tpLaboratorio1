@@ -3,13 +3,18 @@ package ui;
 import javax.swing.JFrame;
 
 import model.CuentaBancaria;
+import model.Tarjeta;
 import model.Usuario;
 import service.CuentaBancariaService;
+import service.TarjetaService;
 import service.UsuarioService;
 import ui.cuenta.PantallaAltaCuentaPanel;
 import ui.cuenta.PantallaListadoCuentaBancariaPanel;
 import ui.cuenta.PantallaModificarCuentaPanel;
 import ui.cuenta.PantallaTransferenciaPanel;
+import ui.tarjeta.PantallaAltaTarjetaPanel;
+import ui.tarjeta.PantallaListadoTarjetasPanel;
+import ui.tarjeta.PantallaModificarTarjetaPanel;
 import ui.usuario.PantallaAltaUsuarioPanel;
 import ui.usuario.PantallaListadoUsuarioPanel;
 import ui.usuario.PantallaModificarUsuarioPanel;
@@ -27,6 +32,12 @@ public class PanelManager {
 	private PantallaTransferenciaPanel pantallaTransferenciaPanel;
 	private CuentaBancariaService cuentaBancariaService;
 
+	// Tarjeta
+	private PantallaListadoTarjetasPanel pantallaListadoTarjetaPanel;
+	private PantallaAltaTarjetaPanel pantallaAltaTarjetaPanel;
+	private PantallaModificarTarjetaPanel pantallaModificarTarjetaPanel;
+	private TarjetaService tarjetaService;
+
 	// Usuario
 	private PantallaListadoUsuarioPanel pantallaListadoUsuarioPanel;
 	private PantallaModificarUsuarioPanel pantallaModificarUsuarioPanel;
@@ -35,9 +46,11 @@ public class PanelManager {
 
 	private Usuario usuarioLogueado;
 
-	public PanelManager(CuentaBancariaService cuentaBancariaService, UsuarioService usuarioService) {
+	public PanelManager(CuentaBancariaService cuentaBancariaService, UsuarioService usuarioService,
+			TarjetaService tarjetaService) {
 		this.cuentaBancariaService = cuentaBancariaService;
 		this.usuarioService = usuarioService;
+		this.tarjetaService = tarjetaService;
 		armarManager();
 	}
 
@@ -48,7 +61,7 @@ public class PanelManager {
 		pantallaLoginPanel = new PantallaLoginPanel(usuarioService, this);
 		pantallaAltaCuentaPanel = new PantallaAltaCuentaPanel(this, cuentaBancariaService);
 		pantallaListadoUsuarioPanel = new PantallaListadoUsuarioPanel(this, usuarioService);
-
+		pantallaAltaTarjetaPanel = new PantallaAltaTarjetaPanel(this, tarjetaService);
 	}
 
 	public void showFrame() {
@@ -142,25 +155,29 @@ public class PanelManager {
 		frame.getContentPane().repaint();
 	}
 
-	public void mostrarPantallaMisTarjetas(Usuario usuario) {
-		/*
-		 * PantallaListadoTarjetaPanel pantallaMisTarjetas = new
-		 * PantallaListadoTarjetaPanel(this, usuarioService, usuario);
-		 * pantallaMisTarjetas.actualizarTabla(); frame.getContentPane().removeAll();
-		 * frame.getContentPane().add(pantallaMisTarjetas);
-		 * frame.getContentPane().validate(); frame.getContentPane().repaint();
-		 */
-	}
-
 	public void mostrarPantallaListadoTarjetas() {
-		/*
-		 * PantallaListadoTarjetaPanel pantallaListadoTarjetas = new
-		 * PantallaListadoTarjetaPanel(this, usuarioService);
-		 * pantallaListadoTarjetas.actualizarTabla();
-		 * frame.getContentPane().removeAll();
-		 * frame.getContentPane().add(pantallaListadoTarjetas);
-		 * frame.getContentPane().validate(); frame.getContentPane().repaint();
-		 */
+		PantallaListadoTarjetasPanel pantallaMisTarjetas = new PantallaListadoTarjetasPanel(this, tarjetaService,
+				usuarioLogueado);
+		pantallaMisTarjetas.actualizarTabla();
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaMisTarjetas);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
 	}
 
+	public void mostrarPantallaAltaTarjeta() {
+		pantallaAltaTarjetaPanel = new PantallaAltaTarjetaPanel(this, tarjetaService);
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaAltaTarjetaPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
+	}
+
+	public void mostrarPantallaModificarTarjeta(Tarjeta tarjeta) {
+		pantallaModificarTarjetaPanel = new PantallaModificarTarjetaPanel(this, tarjetaService, tarjeta);
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(pantallaModificarTarjetaPanel);
+		frame.getContentPane().validate();
+		frame.getContentPane().repaint();
+	}
 }

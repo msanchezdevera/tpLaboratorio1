@@ -9,17 +9,37 @@ public class DatabaseSetup {
 	}
 
 	public static void crearTablaCuentaBancaria() throws DatabaseException {
-		String query = "CREATE TABLE IF NOT EXISTS cuenta_bancaria (" + "id INT AUTO_INCREMENT PRIMARY KEY, "
-				+ "numeroCuenta VARCHAR(255), " + "saldo DOUBLE, " + "tipoCuenta VARCHAR(255), " + "clienteId INT, "
-				+ "cbu VARCHAR(255), " + "alias VARCHAR(255))";
+		String query = "CREATE TABLE IF NOT EXISTS cuenta_bancaria (" 
+				+ "id INT AUTO_INCREMENT PRIMARY KEY, "
+				+ "numeroCuenta VARCHAR(255), " 
+				+ "saldo DOUBLE, " 
+				+ "tipoCuenta VARCHAR(255), " 
+				+ "clienteId INT, "
+				+ "cbu VARCHAR(255), " 
+				+ "alias VARCHAR(255))";
 		QueryExecutor.ejecutarUpdate(query);
 	}
 
 	public static void crearTablaUsuario() throws DatabaseException {
-		String query = "CREATE TABLE IF NOT EXISTS usuario (" + "id INT AUTO_INCREMENT PRIMARY KEY, "
-				+ "nombre VARCHAR(255), " + "apellido VARCHAR(255), " + "email VARCHAR(255), "
-				+ "contrasena VARCHAR(255), " + "tipoUsuario VARCHAR(255))";
+		String query = "CREATE TABLE IF NOT EXISTS usuario (" 
+				+ "id INT AUTO_INCREMENT PRIMARY KEY, "
+				+ "nombre VARCHAR(255), " 
+				+ "apellido VARCHAR(255), " 
+				+ "email VARCHAR(255), "
+				+ "contrasena VARCHAR(255), " 
+				+ "tipoUsuario VARCHAR(255))";
 		QueryExecutor.ejecutarUpdate(query);
 	}
 
+	public static void crearTablaTarjeta() throws DatabaseException {
+		String query = "CREATE TABLE IF NOT EXISTS tarjeta ("
+				+ "id INT AUTO_INCREMENT PRIMARY KEY, "
+				+ "numeroTarjeta VARCHAR(255), " 
+				+ "tipo VARCHAR(255), " 
+				+ "limiteCredito DOUBLE, "
+				+ "saldoUtilizado DOUBLE, "
+				+ "saldoDisponible DOUBLE, "
+				+ "usuarioId INT)";
+		QueryExecutor.ejecutarUpdate(query);
+	}
 }

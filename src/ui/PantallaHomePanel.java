@@ -19,6 +19,7 @@ public class PantallaHomePanel extends JPanel {
 		this.panelManager = panelManager;
 		this.usuario = usuario;
 		armarPantallaHome();
+		
 	}
 
 	private void armarPantallaHome() {
@@ -47,7 +48,7 @@ public class PantallaHomePanel extends JPanel {
 			add(btnMisCuentas);
 
 			JButton btnMisTarjetas = new JButton("Mis Tarjetas");
-			btnMisTarjetas.addActionListener(e -> panelManager.mostrarPantallaMisTarjetas(usuario));
+			btnMisTarjetas.addActionListener(e -> panelManager.mostrarPantallaListadoTarjetas());
 			add(btnMisTarjetas);
 		}
 	}
