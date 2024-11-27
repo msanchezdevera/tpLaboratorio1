@@ -32,40 +32,7 @@ public class MovimientoService {
 	public void registrarMovimiento(Movimiento movimiento) throws MovimientoServiceException, MenorACeroException {
 		try {
 			validarMovimiento(movimiento);
-			CuentaBancaria cuentaOrigen = null;
-			if (movimiento.getCuentaOrigenId() != null) {
-				cuentaOrigen = cuentaBancariaDAO.buscarPorId(movimiento.getCuentaOrigenId());
-			}
-
-			// Verificar saldo negativo para debitos
-			if (movimiento.esDebito()) {
-				if (cuentaOrigen == null) {
-					throw new MovimientoServiceException("La cuenta de origen no fue encontrada.");
-				}
-
-				if (cuentaOrigen.getSaldo() < movimiento.getMonto()) {
-					throw new MovimientoServiceException("Fondos insuficientes para realizar la operación.");
-				}
-			}
-
 			movimientoDAO.insertar(movimiento);
-
-			if (cuentaOrigen != null) {
-				if (movimiento.esDebito()) {
-					cuentaOrigen.setSaldo(cuentaOrigen.getSaldo() - movimiento.getMonto());
-				} else if (movimiento.esCredito()) {
-					cuentaOrigen.setSaldo(cuentaOrigen.getSaldo() + movimiento.getMonto());
-				}
-				cuentaBancariaDAO.actualizarSaldo(cuentaOrigen);
-			}
-
-			// Si es una transferencia, actualizar también el saldo de la cuenta destino
-			if (movimiento.getCuentaDestinoId() != null && movimiento.getTipo().equals(Movimiento.TIPO_TRANSFERENCIA)) {
-				CuentaBancaria cuentaDestino = cuentaBancariaDAO.buscarPorId(movimiento.getCuentaDestinoId());
-				cuentaDestino.setSaldo(cuentaDestino.getSaldo() + movimiento.getMonto());
-				cuentaBancariaDAO.actualizarSaldo(cuentaDestino);
-			}
-
 		} catch (DatabaseException e) {
 			throw new MovimientoServiceException("Error al registrar el movimiento. " + e.getMessage());
 		}
@@ -73,7 +40,7 @@ public class MovimientoService {
 
 	public List<Movimiento> obtenerMovimientosCuentaOrigen(int cuentaId) throws MovimientoServiceException {
 		try {
-			List<Movimiento> movimientos = movimientoDAO.listarPorCuentaOrigen(cuentaId);
+			List<Movimiento> movimientos = movimientoDAO.listarPorCuenta(cuentaId);
 			cargarEntidadesRelacionadas(movimientos);
 			return movimientos;
 		} catch (DatabaseException e) {
@@ -103,18 +70,15 @@ public class MovimientoService {
 
 	private void validarMovimiento(Movimiento movimiento) throws MovimientoServiceException, MenorACeroException {
 		Validador.validarNumeroMayorACero(movimiento.getMonto());
-		if (movimiento.getCuentaOrigenId() == null && movimiento.getTarjetaId() == null) {
+		if (movimiento.getCuentaId() == null && movimiento.getTarjetaId() == null) {
 			throw new MovimientoServiceException("El movimiento debe estar asociado a una cuenta o a una tarjeta.");
 		}
 	}
 
 	private void cargarEntidadesRelacionadas(List<Movimiento> movimientos) throws DatabaseException {
 		for (Movimiento movimiento : movimientos) {
-			if (movimiento.getCuentaOrigenId() != null) {
-				movimiento.setCuentaOrigen(cuentaBancariaDAO.buscarPorId(movimiento.getCuentaOrigenId()));
-			}
-			if (movimiento.getCuentaDestinoId() != null) {
-				movimiento.setCuentaDestino(cuentaBancariaDAO.buscarPorId(movimiento.getCuentaDestinoId()));
+			if (movimiento.getCuentaId() != null) {
+				movimiento.setCuenta(cuentaBancariaDAO.buscarPorId(movimiento.getCuentaId()));
 			}
 			if (movimiento.getTarjetaId() != null) {
 				movimiento.setTarjeta(tarjetaDAO.buscarPorId(movimiento.getTarjetaId()));

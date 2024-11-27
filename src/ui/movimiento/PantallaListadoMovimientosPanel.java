@@ -41,7 +41,7 @@ public class PantallaListadoMovimientosPanel extends JPanel {
 	private void armarPantallaListado() {
 		setLayout(new BorderLayout());
 
-		JLabel lblTitulo = new JLabel("Listado de Movimientos de la Cuenta: " + cuentaOrigen.getNumeroCuenta());
+		JLabel lblTitulo = new JLabel("Resumen de Movimientos de la Cuenta: " + cuentaOrigen.getNumeroCuenta());
 		lblTitulo.setHorizontalAlignment(JLabel.CENTER);
 		lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 		add(lblTitulo, BorderLayout.NORTH);

@@ -94,7 +94,7 @@ public class PantallaListadoCuentaBancariaPanel extends JPanel {
 		});
 		botonesPanel.add(btnTransferir);
 
-		btnVerMovimientos = new JButton("Ver Movimientos");
+		btnVerMovimientos = new JButton("Resumen de Movimientos");
 		btnVerMovimientos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

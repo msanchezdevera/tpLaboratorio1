@@ -37,7 +37,7 @@ public class DatabaseSetup {
 	public static void crearTablaMovimiento() throws DatabaseException {
 		String query = "CREATE TABLE IF NOT EXISTS movimiento (" + "id INT AUTO_INCREMENT PRIMARY KEY, "
 				+ "tipo VARCHAR(255), " + "fecha TIMESTAMP, " + "monto DOUBLE, " + "descripcion VARCHAR(255), "
-				+ "cuentaOrigenId INT, " + "cuentaDestinoId INT, " + "tarjetaId INT, " + "usuarioId INT, "
+				+ "cuentaId INT, " + "tarjetaId INT, " + "usuarioId INT, "
 				+ "saldoPrevio DOUBLE, " + "saldoPosterior DOUBLE)";
 		QueryExecutor.ejecutarUpdate(query);
 	}

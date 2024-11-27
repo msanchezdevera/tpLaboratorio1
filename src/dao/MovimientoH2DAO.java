@@ -28,11 +28,10 @@ public class MovimientoH2DAO implements Dao<Movimiento> {
 		String fechaFormateada = dateFormat.format(movimiento.getFecha());
 
 		String query = String.format(
-				"INSERT INTO movimiento (tipo, monto, fecha, descripcion, cuentaOrigenId, cuentaDestinoId, tarjetaId, usuarioId, saldoPrevio, saldoPosterior) "
-						+ "VALUES ('%s', %f, '%s', '%s', %d, %d, %d, %d, %f, %f)",
+				"INSERT INTO movimiento (tipo, monto, fecha, descripcion, cuentaId, tarjetaId, usuarioId, saldoPrevio, saldoPosterior) "
+						+ "VALUES ('%s', %f, '%s', '%s', %d, %d, %d, %f, %f)",
 				movimiento.getTipo(), movimiento.getMonto(), fechaFormateada, movimiento.getDescripcion(),
-				movimiento.getCuentaOrigenId(),
-				movimiento.getCuentaDestinoId(),
+				movimiento.getCuentaId(),
 				movimiento.getTarjetaId(),
 				movimiento.getUsuarioId(),
 				movimiento.getSaldoPrevio(),
@@ -45,10 +44,9 @@ public class MovimientoH2DAO implements Dao<Movimiento> {
 	@Override
 	public void actualizar(Movimiento movimiento) throws DatabaseException {
 		String query = String.format(
-				"UPDATE movimiento SET tipo = '%s', monto = %f, fecha = '%s', descripcion = '%s', cuentaOrigenId = %d, cuentaDestinoId = %d, tarjetaId = %d, usuarioId = %d, saldoPrevio = %f, saldoPosterior = %f WHERE id = %d",
+				"UPDATE movimiento SET tipo = '%s', monto = %f, fecha = '%s', descripcion = '%s', cuentaId = %d, tarjetaId = %d, usuarioId = %d, saldoPrevio = %f, saldoPosterior = %f WHERE id = %d",
 				movimiento.getTipo(), movimiento.getMonto(), movimiento.getFecha(), movimiento.getDescripcion(),
-				movimiento.getCuentaOrigenId(),
-				movimiento.getCuentaDestinoId(),
+				movimiento.getCuentaId(),
 				movimiento.getTarjetaId(),
 				movimiento.getUsuarioId(),
 				movimiento.getSaldoPrevio(),
@@ -67,8 +65,8 @@ public class MovimientoH2DAO implements Dao<Movimiento> {
 		return QueryExecutor.ejecutarSelect(query, mapper);
 	}
 
-	public List<Movimiento> listarPorCuentaOrigen(int cuentaId) throws DatabaseException {
-		String query = String.format("SELECT * FROM movimiento WHERE cuentaOrigenId = %d", cuentaId);
+	public List<Movimiento> listarPorCuenta(int cuentaId) throws DatabaseException {
+		String query = String.format("SELECT * FROM movimiento WHERE cuentaId = %d", cuentaId);
 		return QueryExecutor.ejecutarSelect(query, mapper);
 	}
 

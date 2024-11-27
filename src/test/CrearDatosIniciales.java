@@ -34,10 +34,10 @@ public class CrearDatosIniciales {
 			DatabaseSetup.crearTablaTarjeta();
 			DatabaseSetup.crearTablaMovimiento();
 
-			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService();
+			MovimientoService movimientoService = new MovimientoService();
+			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService(movimientoService);
 			UsuarioService usuarioService = new UsuarioService();
 			TarjetaService tarjetaService = new TarjetaService();
-			MovimientoService movimientoService = new MovimientoService();
 
 			System.out.println("Creando usuarios iniciales...");
 
@@ -77,13 +77,12 @@ public class CrearDatosIniciales {
 			System.out.println("Creando movimientos iniciales...");
 
 			// Crear un movimiento de depósito para la cuenta de Juan
-			Movimiento deposito = new Movimiento("Depósito", new Date(), 1000.0, "Depósito inicial", cuenta1.getId(),
-					null, null, usuario1.getId(), cuenta1.getSaldo(), cuenta1.getSaldo() + 1000.0);
+			Movimiento deposito = new Movimiento("Depósito", new Date(), 1000.0, "Depósito inicial", cuenta1.getId(), null, usuario1.getId(), cuenta1.getSaldo(), cuenta1.getSaldo() + 1000.0);
 			movimientoService.registrarMovimiento(deposito);
 
 			// Crear un movimiento de pago de tarjeta para la tarjeta de María
 			Movimiento pagoTarjeta = new Movimiento("Pago de Tarjeta", new Date(), 500.0, "Pago de tarjeta de crédito",
-					cuenta1.getId(), null, tarjeta2.getId(), usuario2.getId(), tarjeta2.getSaldoUtilizado(),
+					cuenta1.getId(), tarjeta2.getId(), usuario2.getId(), tarjeta2.getSaldoUtilizado(),
 					tarjeta2.getSaldoUtilizado() - 500.0);
 			movimientoService.registrarMovimiento(pagoTarjeta);
 

@@ -22,10 +22,10 @@ public class HomeBankingApp {
 			DatabaseSetup.crearTablaTarjeta();
 			DatabaseSetup.crearTablaMovimiento();
 
-			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService();
+			MovimientoService movimientoService = new MovimientoService();
+			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService(movimientoService);
 			UsuarioService usuarioService = new UsuarioService();
 			TarjetaService tarjetaService = new TarjetaService();
-			MovimientoService movimientoService = new MovimientoService();
 
 			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService, tarjetaService,
 					movimientoService);

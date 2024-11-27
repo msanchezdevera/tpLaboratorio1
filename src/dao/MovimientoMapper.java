@@ -15,13 +15,9 @@ public class MovimientoMapper implements DaoMapper<Movimiento> {
 		Timestamp fecha = resultSet.getTimestamp("fecha");
 		double monto = resultSet.getDouble("monto");
 		String descripcion = resultSet.getString("descripcion");
-		Integer cuentaOrigenId = resultSet.getInt("cuentaOrigenId");
+		Integer cuentaId = resultSet.getInt("cuentaId");
 		if (resultSet.wasNull()) {
-			cuentaOrigenId = null;
-		}
-		Integer cuentaDestinoId = resultSet.getInt("cuentaDestinoId");
-		if (resultSet.wasNull()) {
-			cuentaDestinoId = null;
+			cuentaId = null;
 		}
 		Integer tarjetaId = resultSet.getInt("tarjetaId");
 		if (resultSet.wasNull()) {
@@ -35,7 +31,7 @@ public class MovimientoMapper implements DaoMapper<Movimiento> {
 		double saldoPosterior = resultSet.getDouble("saldoPosterior");
 
 		try {
-			return new Movimiento(id, tipo, fecha, monto, descripcion, cuentaOrigenId, cuentaDestinoId, tarjetaId,
+			return new Movimiento(id, tipo, fecha, monto, descripcion, cuentaId, tarjetaId,
 					usuarioId, saldoPrevio, saldoPosterior);
 		} catch (Exception e) {
 			throw new SQLException("Error al mapear el objeto Movimiento", e);

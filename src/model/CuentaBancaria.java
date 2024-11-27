@@ -3,6 +3,7 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
+import exception.MenorACeroException;
 import exception.TipoCuentaBancariaInvalidaException;
 
 public class CuentaBancaria {
@@ -72,6 +73,14 @@ public class CuentaBancaria {
 			throw new TipoCuentaBancariaInvalidaException("Tipo de cuenta bancaria no válido: " + tipoCuenta);
 		}
 	}
+	
+	public void debitar(double monto) {
+        this.saldo -= monto;
+    }
+
+    public void acreditar(double monto) {
+        this.saldo += monto;
+    }
 
 	public Integer getId() {
 		return id;
