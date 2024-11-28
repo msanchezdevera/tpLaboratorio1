@@ -29,6 +29,8 @@ public class PantallaListadoTarjetasPanel extends JPanel {
 	private JButton btnModificarTarjeta;
 	private JButton btnEliminarTarjeta;
 	private JButton btnVolverInicio;
+	private JButton btnRegistrarDebito;
+    private JButton btnResumenMovimientos;
 
 	private TarjetaService service;
 	private Usuario usuario;
@@ -61,25 +63,44 @@ public class PantallaListadoTarjetasPanel extends JPanel {
 				}
 			});
 			botonesPanel.add(btnAgregarTarjeta);
+			
+			btnRegistrarDebito = new JButton("Registrar Débito Tarjeta");
+            btnRegistrarDebito.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    registrarDebitoTarjeta();
+                }
+            });
+            botonesPanel.add(btnRegistrarDebito);
+
+            // Botón para ver el resumen de movimientos de la tarjeta
+            btnResumenMovimientos = new JButton("Resumen Movimientos Tarjeta");
+            btnResumenMovimientos.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    verResumenMovimientosTarjeta();
+                }
+            });
+            botonesPanel.add(btnResumenMovimientos);
+            
+            btnModificarTarjeta = new JButton("Modificar Tarjeta");
+    		btnModificarTarjeta.addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				modificarTarjeta();
+    			}
+    		});
+    		botonesPanel.add(btnModificarTarjeta);
+
+    		btnEliminarTarjeta = new JButton("Eliminar Tarjeta");
+    		btnEliminarTarjeta.addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				eliminarTarjeta();
+    			}
+    		});
+    		botonesPanel.add(btnEliminarTarjeta);
 		}
-
-		btnModificarTarjeta = new JButton("Modificar Tarjeta");
-		btnModificarTarjeta.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				modificarTarjeta();
-			}
-		});
-		botonesPanel.add(btnModificarTarjeta);
-
-		btnEliminarTarjeta = new JButton("Eliminar Tarjeta");
-		btnEliminarTarjeta.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				eliminarTarjeta();
-			}
-		});
-		botonesPanel.add(btnEliminarTarjeta);
 
 		btnVolverInicio = new JButton("Volver a Inicio");
 		btnVolverInicio.addActionListener(new ActionListener() {
@@ -161,4 +182,26 @@ public class PantallaListadoTarjetasPanel extends JPanel {
 			}
 		}
 	}
+	
+	private void registrarDebitoTarjeta() {
+        int selectedRow = tableTarjetas.getSelectedRow();
+        if (selectedRow != -1) {
+            Tarjeta tarjeta = tableModel.getTarjetaAt(selectedRow);
+            panelManager.mostrarPantallaRegistrarDebitoTarjeta(tarjeta);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una tarjeta para registrar un débito.", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void verResumenMovimientosTarjeta() {
+        int selectedRow = tableTarjetas.getSelectedRow();
+        if (selectedRow != -1) {
+            Tarjeta tarjeta = tableModel.getTarjetaAt(selectedRow);
+            panelManager.mostrarPantallaResumenMovimientosTarjeta(tarjeta);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una tarjeta para ver el resumen de movimientos.", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import db.QueryExecutor;
 import exception.DatabaseException;
@@ -31,11 +32,8 @@ public class MovimientoH2DAO implements Dao<Movimiento> {
 				"INSERT INTO movimiento (tipo, monto, fecha, descripcion, cuentaId, tarjetaId, usuarioId, saldoPrevio, saldoPosterior) "
 						+ "VALUES ('%s', %f, '%s', '%s', %d, %d, %d, %f, %f)",
 				movimiento.getTipo(), movimiento.getMonto(), fechaFormateada, movimiento.getDescripcion(),
-				movimiento.getCuentaId(),
-				movimiento.getTarjetaId(),
-				movimiento.getUsuarioId(),
-				movimiento.getSaldoPrevio(),
-				movimiento.getSaldoPosterior());
+				movimiento.getCuentaId(), movimiento.getTarjetaId(), movimiento.getUsuarioId(),
+				movimiento.getSaldoPrevio(), movimiento.getSaldoPosterior());
 		int idGenerado = QueryExecutor.ejecutarInsert(query);
 		movimiento.setId(idGenerado);
 		return idGenerado;
@@ -46,11 +44,8 @@ public class MovimientoH2DAO implements Dao<Movimiento> {
 		String query = String.format(
 				"UPDATE movimiento SET tipo = '%s', monto = %f, fecha = '%s', descripcion = '%s', cuentaId = %d, tarjetaId = %d, usuarioId = %d, saldoPrevio = %f, saldoPosterior = %f WHERE id = %d",
 				movimiento.getTipo(), movimiento.getMonto(), movimiento.getFecha(), movimiento.getDescripcion(),
-				movimiento.getCuentaId(),
-				movimiento.getTarjetaId(),
-				movimiento.getUsuarioId(),
-				movimiento.getSaldoPrevio(),
-				movimiento.getSaldoPosterior());
+				movimiento.getCuentaId(), movimiento.getTarjetaId(), movimiento.getUsuarioId(),
+				movimiento.getSaldoPrevio(), movimiento.getSaldoPosterior());
 		QueryExecutor.ejecutarUpdate(query);
 	}
 
@@ -72,6 +67,12 @@ public class MovimientoH2DAO implements Dao<Movimiento> {
 
 	public List<Movimiento> listarPorUsuario(int usuarioId) throws DatabaseException {
 		String query = String.format("SELECT * FROM movimiento WHERE usuarioId = %d", usuarioId);
+		return QueryExecutor.ejecutarSelect(query, mapper);
+	}
+
+	public List<Movimiento> buscarPorTarjetaYMes(int tarjetaId, int mes) throws DatabaseException {
+		String query = String.format("SELECT * FROM movimiento WHERE tarjetaId = %d AND MONTH(fecha) = %d", tarjetaId,
+				mes);
 		return QueryExecutor.ejecutarSelect(query, mapper);
 	}
 }

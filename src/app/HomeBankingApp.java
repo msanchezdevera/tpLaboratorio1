@@ -25,7 +25,7 @@ public class HomeBankingApp {
 			MovimientoService movimientoService = new MovimientoService();
 			CuentaBancariaService cuentaBancariaService = new CuentaBancariaService(movimientoService);
 			UsuarioService usuarioService = new UsuarioService();
-			TarjetaService tarjetaService = new TarjetaService();
+			TarjetaService tarjetaService = new TarjetaService(movimientoService);
 
 			PanelManager manager = new PanelManager(cuentaBancariaService, usuarioService, tarjetaService,
 					movimientoService);

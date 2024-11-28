@@ -54,6 +54,18 @@ public class Tarjeta {
 			throw new TipoTarjetaInvalidaException("Tipo de tarjeta no válido: " + tipoTarjeta);
 		}
 	}
+	
+	public void debitar(double monto) {
+        if (monto > saldoDisponible) {
+            throw new IllegalArgumentException("El monto a debitar excede el saldo disponible.");
+        }
+        this.saldoUtilizado += monto;
+        actualizarSaldoDisponible();
+    }
+
+    private void actualizarSaldoDisponible() {
+        this.saldoDisponible = this.limiteCredito - this.saldoUtilizado;
+    }
 
 	public Integer getId() {
 		return id;
@@ -116,10 +128,6 @@ public class Tarjeta {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	private void actualizarSaldoDisponible() {
-		this.saldoDisponible = this.limiteCredito - this.saldoUtilizado;
 	}
 
 	@Override

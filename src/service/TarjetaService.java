@@ -3,22 +3,27 @@ package service;
 import dao.TarjetaH2DAO;
 import exception.DatabaseException;
 import exception.MenorACeroException;
+import exception.MovimientoServiceException;
 import exception.TarjetaServiceException;
 import exception.TextoVacioException;
 import exception.TipoTarjetaInvalidaException;
 import exception.ValorNoNumericoException;
+import model.Movimiento;
 import model.Tarjeta;
 import model.Usuario;
 import validador.Validador;
 
+import java.util.Date;
 import java.util.List;
 
 public class TarjetaService {
 
 	private final TarjetaH2DAO tarjetaDAO;
+	private final MovimientoService movimientoService;
 
-	public TarjetaService() {
+	public TarjetaService(MovimientoService movimientoService) {
 		this.tarjetaDAO = new TarjetaH2DAO();
+		this.movimientoService = movimientoService;
 	}
 
 	public Tarjeta crearTarjeta(String numeroTarjeta, String tipo, double limiteCredito, double saldoUtilizado,
@@ -64,6 +69,35 @@ public class TarjetaService {
 		} catch (DatabaseException e) {
 			throw new TarjetaServiceException("Error al obtener la tarjeta con ID " + id);
 		}
+	}
+	
+	public void realizarDebitoTarjeta(Tarjeta tarjeta, double monto, String descripcion) throws TarjetaServiceException, MovimientoServiceException {
+	    try {
+	        if (monto <= 0 || monto > tarjeta.getSaldoDisponible()) {
+	            throw new TarjetaServiceException("Monto inválido o excede el saldo disponible.");
+	        }
+
+	        double saldoPrevio = tarjeta.getSaldoUtilizado();
+	        tarjeta.debitar(monto);
+
+	        Movimiento movimiento = new Movimiento(
+	            Movimiento.TIPO_PAGO_TARJETA,
+	            new Date(),
+	            monto,
+	            descripcion,
+	            null,
+	            tarjeta.getId(),
+	            tarjeta.getUsuarioId(),
+	            saldoPrevio,
+	            tarjeta.getSaldoUtilizado() // Saldo posterior
+	        );
+
+	        movimientoService.registrarMovimiento(movimiento);
+
+	        tarjetaDAO.actualizar(tarjeta);
+	    } catch (Exception e) {
+	        throw new TarjetaServiceException("Error al realizar el débito de la tarjeta. " + e.getMessage());
+	    }
 	}
 
 	public void actualizarTarjeta(int tarjetaId, String tipo, double limiteCredito, double saldoUtilizado)

@@ -17,6 +17,8 @@ import ui.movimiento.PantallaListadoMovimientosPanel;
 import ui.tarjeta.PantallaAltaTarjetaPanel;
 import ui.tarjeta.PantallaListadoTarjetasPanel;
 import ui.tarjeta.PantallaModificarTarjetaPanel;
+import ui.tarjeta.PantallaRegistrarDebitoTarjetaPanel;
+import ui.tarjeta.PantallaResumenMovimientosTarjetaPanel;
 import ui.usuario.PantallaAltaUsuarioPanel;
 import ui.usuario.PantallaListadoUsuarioPanel;
 import ui.usuario.PantallaModificarUsuarioPanel;
@@ -35,7 +37,6 @@ public class PanelManager {
 	private CuentaBancariaService cuentaBancariaService;
 
 	// Tarjeta
-	private PantallaListadoTarjetasPanel pantallaListadoTarjetaPanel;
 	private PantallaAltaTarjetaPanel pantallaAltaTarjetaPanel;
 	private PantallaModificarTarjetaPanel pantallaModificarTarjetaPanel;
 	private TarjetaService tarjetaService;
@@ -195,5 +196,21 @@ public class PanelManager {
 		frame.getContentPane().add(pantallaListadoMovimientos);
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
+	}
+	
+	public void mostrarPantallaRegistrarDebitoTarjeta(Tarjeta tarjeta) {
+	    PantallaRegistrarDebitoTarjetaPanel panel = new PantallaRegistrarDebitoTarjetaPanel(this, tarjeta, tarjetaService);
+	    frame.getContentPane().removeAll();
+	    frame.getContentPane().add(panel);
+	    frame.getContentPane().validate();
+	    frame.getContentPane().repaint();
+	}
+
+	public void mostrarPantallaResumenMovimientosTarjeta(Tarjeta tarjeta) {
+	    PantallaResumenMovimientosTarjetaPanel panel = new PantallaResumenMovimientosTarjetaPanel(this, tarjeta, movimientoService);
+	    frame.getContentPane().removeAll();
+	    frame.getContentPane().add(panel);
+	    frame.getContentPane().validate();
+	    frame.getContentPane().repaint();
 	}
 }

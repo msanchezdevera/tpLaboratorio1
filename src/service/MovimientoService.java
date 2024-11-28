@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Date;
 import java.util.List;
 
 import dao.CuentaBancariaH2DAO;
@@ -37,6 +38,14 @@ public class MovimientoService {
 			throw new MovimientoServiceException("Error al registrar el movimiento. " + e.getMessage());
 		}
 	}
+	
+	public List<Movimiento> obtenerMovimientosPorTarjetaYMes(int tarjetaId, int mes) throws MovimientoServiceException {
+        try {
+            return movimientoDAO.buscarPorTarjetaYMes(tarjetaId, mes);
+        } catch (DatabaseException e) {
+            throw new MovimientoServiceException("Error al obtener movimientos por tarjeta y mes. " + e.getMessage());
+        }
+    }
 
 	public List<Movimiento> obtenerMovimientosCuentaOrigen(int cuentaId) throws MovimientoServiceException {
 		try {
