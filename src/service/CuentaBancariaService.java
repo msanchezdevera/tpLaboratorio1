@@ -213,5 +213,33 @@ public class CuentaBancariaService {
         movimientoService.registrarMovimiento(movimientoCredito);
     }
 	
+	public void generarInteresesParaCuentas() throws CuentaBancariaServiceException, TipoMovimientoInvalidoException, MenorACeroException {
+        try {
+            List<CuentaBancaria> todasLasCuentas = cuentaBancariaDAO.listarTodos();
+            for (CuentaBancaria cuenta : todasLasCuentas) {
+                double intereses = cuenta.calcularInteres();
+                if (intereses > 0) {
+                	double saldoPrevio = cuenta.getSaldo();
+                    cuenta.acreditar(intereses);
+                    cuentaBancariaDAO.actualizarSaldo(cuenta);
+
+                    Movimiento movimiento = new Movimiento(
+                            Movimiento.TIPO_ACREDITACION_INTERES,
+                            new Date(),
+                            intereses,
+                            "Acreditación de intereses para " + cuenta.getTipoCuenta(),
+                            cuenta.getId(),
+                            null,
+                            cuenta.getUsuario().getId(),
+                            saldoPrevio,
+                            cuenta.getSaldo()
+                    );
+                    movimientoService.registrarMovimiento(movimiento);
+                }
+            }
+        } catch (DatabaseException | MovimientoServiceException e) {
+            throw new CuentaBancariaServiceException("Error al generar intereses para las cuentas.", e);
+        }
+    }
 	
 }

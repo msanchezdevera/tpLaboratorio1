@@ -88,7 +88,7 @@ public class PanelManager {
 	}
 
 	public void mostrarPantallaHome() {
-		pantallaHomePanel = new PantallaHomePanel(this, usuarioLogueado);
+		pantallaHomePanel = new PantallaHomePanel(this, cuentaBancariaService, usuarioLogueado);
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(pantallaHomePanel);
 		frame.getContentPane().validate();

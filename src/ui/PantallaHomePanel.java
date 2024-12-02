@@ -6,18 +6,25 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import exception.CuentaBancariaServiceException;
+import exception.MenorACeroException;
+import exception.TipoMovimientoInvalidoException;
 import model.Usuario;
+import service.CuentaBancariaService;
 
 public class PantallaHomePanel extends JPanel {
 
 	private PanelManager panelManager;
+	private CuentaBancariaService cuentaBancariaService;
 	private Usuario usuario;
 
-	public PantallaHomePanel(PanelManager panelManager, Usuario usuario) {
+	public PantallaHomePanel(PanelManager panelManager, CuentaBancariaService cuentaBancariaService, Usuario usuario) {
 		this.panelManager = panelManager;
 		this.usuario = usuario;
+		this.cuentaBancariaService = cuentaBancariaService;
 		armarPantallaHome();
 
 	}
@@ -42,6 +49,10 @@ public class PantallaHomePanel extends JPanel {
 			btnVerTarjetas.addActionListener(e -> panelManager.mostrarPantallaListadoTarjetas());
 			add(btnVerTarjetas);
 
+			JButton btnGenerarIntereses = new JButton("Generar Intereses para Cuentas");
+			btnGenerarIntereses.addActionListener(e -> generarIntereses());
+			add(btnGenerarIntereses);
+
 		} else {
 			JButton btnMisCuentas = new JButton("Mis Cuentas");
 			btnMisCuentas.addActionListener(e -> panelManager.mostrarPantallaMisCuentas(usuario));
@@ -50,6 +61,17 @@ public class PantallaHomePanel extends JPanel {
 			JButton btnMisTarjetas = new JButton("Mis Tarjetas");
 			btnMisTarjetas.addActionListener(e -> panelManager.mostrarPantallaListadoTarjetas());
 			add(btnMisTarjetas);
+		}
+	}
+
+	private void generarIntereses() {
+		try {
+			cuentaBancariaService.generarInteresesParaCuentas();
+			JOptionPane.showMessageDialog(this, "Intereses generados exitosamente para las cuentas aplicables.",
+					"Generar Intereses", JOptionPane.INFORMATION_MESSAGE);
+		} catch (CuentaBancariaServiceException | TipoMovimientoInvalidoException | MenorACeroException e) {
+			JOptionPane.showMessageDialog(this, "Error al generar intereses: " + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

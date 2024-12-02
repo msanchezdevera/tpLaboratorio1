@@ -5,6 +5,9 @@ import java.util.Set;
 
 import exception.MenorACeroException;
 import exception.TipoCuentaBancariaInvalidaException;
+import model.intereses.InteresFondoFimaStrategy;
+import model.intereses.InteresStrategy;
+import model.intereses.SinInteresStrategy;
 
 public class CuentaBancaria {
 
@@ -30,6 +33,7 @@ public class CuentaBancaria {
 	private String alias;
 	private Usuario usuario;
 	private Integer clienteId;
+	private InteresStrategy interesStrategy;
 
 	public CuentaBancaria(String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
 			Usuario usuario) throws TipoCuentaBancariaInvalidaException {
@@ -42,6 +46,7 @@ public class CuentaBancaria {
 		this.cbu = cbu;
 		this.alias = alias;
 		this.usuario = usuario;
+		asignarInteresStrategy();
 	}
 
 	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
@@ -54,6 +59,7 @@ public class CuentaBancaria {
 		this.cbu = cbu;
 		this.alias = alias;
 		this.usuario = usuario;
+		asignarInteresStrategy();
 	}
 
 	public CuentaBancaria(int id, String numeroCuenta, double saldo, String tipoCuenta, String cbu, String alias,
@@ -66,6 +72,7 @@ public class CuentaBancaria {
 		this.cbu = cbu;
 		this.alias = alias;
 		this.setClienteId(clienteId);
+		asignarInteresStrategy();
 	}
 
 	private void validarTipoCuenta(String tipoCuenta) throws TipoCuentaBancariaInvalidaException {
@@ -73,6 +80,18 @@ public class CuentaBancaria {
 			throw new TipoCuentaBancariaInvalidaException("Tipo de cuenta bancaria no válido: " + tipoCuenta);
 		}
 	}
+	
+	private void asignarInteresStrategy() {
+		if(this.tipoCuenta == FONDO_FIMA) {
+			this.interesStrategy = new InteresFondoFimaStrategy();
+		} else {
+			this.interesStrategy = new SinInteresStrategy();
+		}
+	}
+	
+	public double calcularInteres() {
+        return interesStrategy.calcularInteres(this.saldo);
+    }
 	
 	public void debitar(double monto) {
         this.saldo -= monto;
