@@ -1,9 +1,12 @@
 package ui.auditoria;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,6 +37,19 @@ public class PantallaAuditoriaPanel extends JPanel {
         lblTitulo.setHorizontalAlignment(JLabel.CENTER);
         lblTitulo.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(lblTitulo, BorderLayout.NORTH);
+        
+        JPanel botonesPanel = new JPanel();
+        
+        JButton btnVolverInicio = new JButton("Volver a Inicio");
+		btnVolverInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelManager.mostrarPantallaHome();
+			}
+		});
+		botonesPanel.add(btnVolverInicio);
+
+		add(botonesPanel, BorderLayout.SOUTH);
 
         try {
             List<Movimiento> movimientos = movimientoService.obtenerMovimientosAuditoria();
