@@ -14,6 +14,7 @@ import exception.MenorACeroException;
 import exception.TipoMovimientoInvalidoException;
 import model.Usuario;
 import service.CuentaBancariaService;
+import service.MovimientoService;
 
 public class PantallaHomePanel extends JPanel {
 
@@ -52,7 +53,10 @@ public class PantallaHomePanel extends JPanel {
 			JButton btnGenerarIntereses = new JButton("Generar Intereses para Cuentas");
 			btnGenerarIntereses.addActionListener(e -> generarIntereses());
 			add(btnGenerarIntereses);
-
+			
+			JButton btnAuditoria = new JButton("Reporte de Auditoría");
+			btnAuditoria.addActionListener(e -> panelManager.mostrarPantallaAuditoria());
+			add(btnAuditoria);
 		} else {
 			JButton btnMisCuentas = new JButton("Mis Cuentas");
 			btnMisCuentas.addActionListener(e -> panelManager.mostrarPantallaMisCuentas(usuario));

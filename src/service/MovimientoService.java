@@ -1,5 +1,9 @@
 package service;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +79,43 @@ public class MovimientoService {
 		} catch (DatabaseException e) {
 			throw new MovimientoServiceException("Error al obtener movimientos para la tarjeta con ID: " + tarjetaId);
 		}
+	}
+	
+	public void generarReporteMovimientosPorUsuario(int usuarioId, String rutaArchivo) throws MovimientoServiceException {
+	    try {
+	        
+	        List<Movimiento> movimientos = movimientoDAO.listarPorUsuario(usuarioId);
+	        // Generar archivo con el reporte
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+	            writer.write("Fecha, Tipo, Cuenta/ID Tarjeta, Monto, Descripción, Saldo Previo, Saldo Posterior");
+	            writer.newLine();
+	            for (Movimiento movimiento : movimientos) {
+	                String linea = String.format("%s,%s,%s,%.2f,%s,%.2f,%.2f",
+	                        movimiento.getFecha().toString(),
+	                        movimiento.getTipo(),
+	                        movimiento.getCuentaId() != null ? "Cuenta ID: " + movimiento.getCuentaId() : "Tarjeta ID: " + movimiento.getTarjetaId(),
+	                        movimiento.getMonto(),
+	                        movimiento.getDescripcion(),
+	                        movimiento.getSaldoPrevio(),
+	                        movimiento.getSaldoPosterior());
+	                writer.write(linea);
+	                writer.newLine();
+	            }
+	        } catch (IOException e) {
+	            throw new MovimientoServiceException("Error al escribir el archivo de reporte: " + e.getMessage());
+	        }
+
+	    } catch (DatabaseException e) {
+	        throw new MovimientoServiceException("Error al obtener movimientos del usuario: " + e.getMessage());
+	    }
+	}
+	
+	public List<Movimiento> obtenerMovimientosAuditoria() throws MovimientoServiceException {
+	    try {
+	        return movimientoDAO.listarTodos();
+	    } catch (DatabaseException e) {
+	        throw new MovimientoServiceException("Error al obtener los movimientos de auditoría: " + e.getMessage());
+	    }
 	}
 
 	private void validarMovimiento(Movimiento movimiento) throws MovimientoServiceException, MenorACeroException {

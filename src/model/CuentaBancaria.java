@@ -82,7 +82,7 @@ public class CuentaBancaria {
 	}
 	
 	private void asignarInteresStrategy() {
-		if(this.tipoCuenta == FONDO_FIMA) {
+		if(FONDO_FIMA.equals(this.tipoCuenta)) {
 			this.interesStrategy = new InteresFondoFimaStrategy();
 		} else {
 			this.interesStrategy = new SinInteresStrategy();

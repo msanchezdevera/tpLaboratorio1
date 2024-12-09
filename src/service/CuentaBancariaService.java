@@ -215,7 +215,7 @@ public class CuentaBancariaService {
 	
 	public void generarInteresesParaCuentas() throws CuentaBancariaServiceException, TipoMovimientoInvalidoException, MenorACeroException {
         try {
-            List<CuentaBancaria> todasLasCuentas = cuentaBancariaDAO.listarTodos();
+            List<CuentaBancaria> todasLasCuentas = obtenerTodasLasCuentas();
             for (CuentaBancaria cuenta : todasLasCuentas) {
                 double intereses = cuenta.calcularInteres();
                 if (intereses > 0) {

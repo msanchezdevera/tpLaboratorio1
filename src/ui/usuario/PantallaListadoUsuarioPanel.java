@@ -3,6 +3,7 @@ package ui.usuario;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -13,10 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import exception.MovimientoServiceException;
 import exception.UsuarioNoEncontradoException;
 import exception.UsuarioServiceException;
 import model.Usuario;
+import service.MovimientoService;
 import service.UsuarioService;
+import javax.swing.JFileChooser;
 import ui.PanelManager;
 
 public class PantallaListadoUsuarioPanel extends JPanel {
@@ -31,10 +35,12 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 	private JButton btnVolverInicio;
 
 	private UsuarioService service;
+	private MovimientoService movimientoService;
 
-	public PantallaListadoUsuarioPanel(PanelManager panelManager, UsuarioService service) {
+	public PantallaListadoUsuarioPanel(PanelManager panelManager, UsuarioService service, MovimientoService movimientoService) {
 		this.panelManager = panelManager;
 		this.service = service;
+		this.movimientoService = movimientoService;
 		armarPantallaListado();
 	}
 
@@ -85,6 +91,15 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 			}
 		});
 		botonesPanel.add(btnEliminarUsuario);
+		
+		JButton btnGenerarReporte = new JButton("Generar Reporte de Movimientos");
+		btnGenerarReporte.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        generarReporteMovimientos();
+		    }
+		});
+		botonesPanel.add(btnGenerarReporte);
 
 		btnVolverInicio = new JButton("Volver a Inicio");
 		btnVolverInicio.addActionListener(new ActionListener() {
@@ -140,5 +155,30 @@ public class PantallaListadoUsuarioPanel extends JPanel {
 						"Error al eliminar el usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+	
+	private void generarReporteMovimientos() {
+		int selectedRow = tableUsuarios.getSelectedRow();
+        if (selectedRow != -1) {
+            Usuario usuario = tableModel.getUsuarioAt(selectedRow);
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar Reporte de Movimientos");
+            int userSelection = fileChooser.showSaveDialog(PantallaListadoUsuarioPanel.this);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File archivo = fileChooser.getSelectedFile();
+                try {
+                    movimientoService.generarReporteMovimientosPorUsuario(usuario.getId(), archivo.getAbsolutePath());
+                    JOptionPane.showMessageDialog(PantallaListadoUsuarioPanel.this, "Reporte generado exitosamente.",
+                            "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } catch (MovimientoServiceException ex) {
+                    JOptionPane.showMessageDialog(PantallaListadoUsuarioPanel.this,
+                            "Error al generar el reporte de movimientos: " + ex.getMessage(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario para generar el reporte.", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+        }
 	}
 }

@@ -9,6 +9,7 @@ import service.CuentaBancariaService;
 import service.MovimientoService;
 import service.TarjetaService;
 import service.UsuarioService;
+import ui.auditoria.PantallaAuditoriaPanel;
 import ui.cuenta.PantallaAltaCuentaPanel;
 import ui.cuenta.PantallaListadoCuentaBancariaPanel;
 import ui.cuenta.PantallaModificarCuentaPanel;
@@ -67,7 +68,7 @@ public class PanelManager {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantallaLoginPanel = new PantallaLoginPanel(usuarioService, this);
 		pantallaAltaCuentaPanel = new PantallaAltaCuentaPanel(this, cuentaBancariaService);
-		pantallaListadoUsuarioPanel = new PantallaListadoUsuarioPanel(this, usuarioService);
+		pantallaListadoUsuarioPanel = new PantallaListadoUsuarioPanel(this, usuarioService, movimientoService);
 		pantallaAltaTarjetaPanel = new PantallaAltaTarjetaPanel(this, tarjetaService);
 	}
 
@@ -210,6 +211,14 @@ public class PanelManager {
 	    PantallaResumenMovimientosTarjetaPanel panel = new PantallaResumenMovimientosTarjetaPanel(this, tarjeta, movimientoService);
 	    frame.getContentPane().removeAll();
 	    frame.getContentPane().add(panel);
+	    frame.getContentPane().validate();
+	    frame.getContentPane().repaint();
+	}
+	
+	public void mostrarPantallaAuditoria() {
+	    PantallaAuditoriaPanel pantallaAuditoria = new PantallaAuditoriaPanel(this, movimientoService);
+	    frame.getContentPane().removeAll();
+	    frame.getContentPane().add(pantallaAuditoria);
 	    frame.getContentPane().validate();
 	    frame.getContentPane().repaint();
 	}
